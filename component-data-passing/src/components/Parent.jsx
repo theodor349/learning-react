@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 
 function Parent() {
-  var [count, setCount] = useState(0)
+  const [count, setCount] = useState(0)
   
   function onClick(value) {
     setCount(count + value)

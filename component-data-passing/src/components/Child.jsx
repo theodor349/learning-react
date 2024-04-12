@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 function Child({onClick}) {
-  var [value, setValue] = useState(1)
+  const [value, setValue] = useState(1)
   return (
     <>
       <p>Value: {value}</p>
