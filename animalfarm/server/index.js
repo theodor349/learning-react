@@ -11,15 +11,15 @@ const chance = new Chance();
 const animals = [...Array(250).keys()].map(id => {
     return {
       id,
-        type: chance.animal(),
+      type: chance.animal(),
       name: chance.animal(),
-      age: chance.age
+      age: chance.age()
     }
 })
 
 app.get('', (req, res) => {
   const q = req.query.q?.toLowerCase() || '';
-  const results = animals.filter(animal => animal.name.includes(q))
+  const results = animals.filter(animal => animal.name.toLocaleLowerCase().includes(q))
   res.send(results);
 })
 
