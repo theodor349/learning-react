@@ -13,7 +13,7 @@ function App() {
 
   const searchAnimals = async (q) => {
     localStorage.setItem('searchAnimal', q)
-    const res = await fetch(`http://localhost:8080?q=${q}`)
+    const res = await fetch(`http://localhost:8080?` + new URLSearchParams({ q }))
     const data = await res.json()
     setAnimals(data)
     setSearch(q)
