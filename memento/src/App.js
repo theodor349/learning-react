@@ -1,12 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import shuffle from './utilities/shuffel';
+import Card from './components/Card';
 
 function App() {
-  return (
-    <div>
+  const [cards, setCards] = useState(shuffle);
 
-    </div>
+  return (
+    <>
+      <div className='grid'>
+        {cards.map((card) => {
+          const { Image, id, matched } = card;
+          return (
+            <Card
+              key={id}
+              image={Image}
+              selected={false}
+              onClick={() => {}}
+            />
+          )
+        })}
+      </div>
+    </>
   );
 }
 
