@@ -1,23 +1,74 @@
 import React from 'react';
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import shuffle from './utilities/shuffel';
 import Card from './components/Card';
 
 function App() {
   const [cards, setCards] = useState(shuffle);
+  const [pickOne, setPickOne] = useState(null);
+  const [pickTwo, setPickTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+  const [wins, setWins] = useState(0);
+
+  const handleClick = (card) => {
+    if(!disabled){
+      pickOne ? setPickTwo(card) : setPickOne(card);
+    }
+  }
+
+  const handleTurn = () => {
+    setPickOne(null);
+    setPickTwo(null);
+    setDisabled(false);
+  }
+
+  useEffect(() => {
+    let pickTimer;
+    if(pickOne && pickTwo){
+      if(pickOne.image === pickTwo.image){
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if(card.image === pickOne.image){
+              return { ...card, matched: true }
+            } else {
+              return card;
+            }
+          });
+        });
+        handleTurn();
+      } else {
+        setDisabled(true);
+        pickTimer = setTimeout(() => {
+          handleTurn();
+        }, 1000);
+      }
+    }
+
+    return () => clearTimeout(pickTimer);
+  }, [cards, pickOne, pickTwo]);
+
+  useEffect(() => {
+    const checkWins = cards.filter((card) => !card.matched);
+    if(cards.length && checkWins.length < 1){
+      console.log('You win!')
+      setWins(wins + 1);
+      handleTurn();
+      setCards(shuffle);
+    }
+  }, [cards, wins])
 
   return (
     <>
       <div className='grid'>
         {cards.map((card) => {
-          const { Image, id, matched } = card;
+          const { image, id, matched } = card;
           return (
             <Card
               key={id}
-              image={Image}
-              selected={false}
-              onClick={() => {}}
+              image={image}
+              selected={card == pickOne || card == pickTwo || matched}
+              onClick={() => {handleClick(card)}}
             />
           )
         })}
