@@ -14,6 +14,9 @@ export async function generateMetadata({ params }: Props) : Promise<Metadata> {
 }
 
 export default async function UserProfile({ params }: Props) {
+  throw new Error('This is an error');
+
+
   const user = await prisma.user.findUnique({ where: { id: params.id }});
   const {name, bio, image, id } = user ?? {};
 
