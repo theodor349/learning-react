@@ -1,6 +1,6 @@
 'use client';
 
-export function ProfileForm(user: any) {
+export function ProfileForm({ user }: any) {
   const updateUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
