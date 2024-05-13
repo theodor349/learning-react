@@ -1,4 +1,2 @@
 myspace/.env
-server-actions/pb_data/data.db
-server-actions/pb_data/logs.db
-server-actions/pb_data/types.d.ts
+server-actions/pb_data*
