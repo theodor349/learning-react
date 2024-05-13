@@ -19,14 +19,7 @@ export default async function Todo() {
   return (
     <>
       <h1>Todos Page</h1>
-
-      <Form/>
-
-      <ul>
-        {todos?.map((todo) => (
-          <li key={todo.id}>{todo.name}</li>
-        ))}
-      </ul>
+      <Form todos={todos}/>
     </>
   )
 }
