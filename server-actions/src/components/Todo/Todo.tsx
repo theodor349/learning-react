@@ -1,6 +1,11 @@
 import React from 'react'
+import PocketBase from "pocketbase"
 
-export default function Todo() {
+export default async function Todo() {
+  const pb = new PocketBase('http://127.0.0.1:8090');
+  const resultList = await pb.collection('posts').create({title, content});
+
+
   var todos = [{ id: 1, content: "Buy Milk", completed: false }, { id: 2, content: "Buy Bread", completed: false }];
   return (
     <>
