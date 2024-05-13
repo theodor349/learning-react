@@ -13,7 +13,9 @@ export default async function Todo() {
       if(formData.get('name') === '') 
         return alert('Please write your todo...');
 
-      await addTodo(formData)
+      const error = await addTodo(formData)
+      if(error) 
+        alert('An error occurred while adding todo: ' + error);
     }}>
       <input type="text" name='name' placeholder="Write your todo..." />
       <Button/>

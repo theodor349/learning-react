@@ -15,7 +15,6 @@ async function getTodos(){
 
 export default async function Todo() {
   const todos = await getTodos();
-  console.log(todos);
 
   return (
     <>
