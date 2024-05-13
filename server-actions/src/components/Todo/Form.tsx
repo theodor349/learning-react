@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { addTodo } from "@/actions/actions";
+import Button from "@/components/Todo/Button";
 
 export default async function Todo() {
   const ref = React.useRef<HTMLFormElement>(null);
@@ -15,7 +16,7 @@ export default async function Todo() {
       await addTodo(formData)
     }}>
       <input type="text" name='name' placeholder="Write your todo..." />
-      <button type="submit">Add</button>
+      <Button/>
     </form>
   )
 }
