@@ -1,2 +1,5 @@
 myspace/.env
 server-actions/pb_data*
+anki-notes/pb_data/data.db
+anki-notes/pb_data/logs.db
+anki-notes/pb_data/types.d.ts
