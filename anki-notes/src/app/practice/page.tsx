@@ -1,41 +1,25 @@
 import FlipCard from "@/components/flipCard/flipCard";
 import React from 'react'
+import PocketBase from 'pocketbase';
 
 type Props = {}
 
-var b: boolean = false;
-
 export default async function page({}: Props) {
-  const activeCard: AnkiCard = await GetNextCard();
-
+  const pb = new PocketBase('http://127.0.0.1:8090');
+  const date = new Date();
+  const filter = `nextPractice<'${date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate() + "T00:00:00.000Z"}'`;
+  console.log("Filter: " + filter);
+  const card = await pb.collection('cards').getFirstListItem<AnkiCard>(filter);
+  console.log(card);
   return (
     <>
-      <FlipCard { ... activeCard } />
+      <FlipCard { ... card} />
     </>
   )
 }
 
-function GetNextCard(): AnkiCard {
-    b = !b;
-    if(b){
-    return {
-      deckTitle: "Architectural Smells",
-      question: "What is a 'Golden hammer'?", 
-      answer: "This smell occurs when familiar technologies are used as solutions to every problem."
-    };
-  }
-  else {
-    return {
-      deckTitle: "Architectural Smells",
-      question: "What is a 'Bottleneck service'?", 
-      answer: "This smell occurs when a service is highly used (high incoming and outgoing coupling) by other services."
-    };
-  }
-}
-
-
 type AnkiCard = {
-  deckTitle: string
+  id: string
   question: string
   answer: string
 }

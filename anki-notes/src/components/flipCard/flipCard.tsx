@@ -6,14 +6,15 @@ import { cn } from "@/lib/utils"
 import { useState } from 'react'
 
 type Props = {
-  deckTitle: string
+  id: string
   question: string
   answer: string
 }
 
-export default function FlipCard({deckTitle, question, answer}: Props) {
+export default function FlipCard({id, question, answer}: Props) {
   const [isFlipped, setIsFlipped] = useState(false)
-  
+  console.log(id, question, answer)
+
   return (
     <div className={cn("flex flex-col justify-around m-2 gap-2")}>
       <Card>
