@@ -2,7 +2,7 @@ import Practice from "@/app/practice/page";
 
 export default function Home() {
   return (
-    <Practice/>
+    <h1>Welcome to the Anki Notes app</h1>
   );
 }
 

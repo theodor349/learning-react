@@ -3,10 +3,17 @@ export const dynamic = 'force-dynamic'
 import PocketBase from 'pocketbase';
 import FlipCard from '@/components/flipCard/flipCard';
 import OutOfCards from '@/components/flipCard/outOfCards';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { redirect } from 'next/navigation';
 
 type Props = {}
 
 export default async function Practice({}: Props) {
+  const session = await getServerSession(options);
+  if(!session)
+    redirect('/api/auth/signin?callbackUrl=/practice');
+
   const pb = new PocketBase('http://127.0.0.1:8090');
   const date = new Date();
   const filter = `nextPractice<'${
