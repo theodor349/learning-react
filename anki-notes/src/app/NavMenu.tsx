@@ -21,10 +21,10 @@ export default async function NavMenu() {
             <Link href={'/practice'}>Practice</Link>
           </li>
           <li>
-            <Link href={'/decks'}>Decks</Link>
+            <Link href={'/deck'}>Decks</Link>
           </li>
           <li>
-            <Link href={'/cards'}>Cards</Link>
+            <Link href={'/card'}>Cards</Link>
           </li>
           <li>
             <SignOutButton/>
