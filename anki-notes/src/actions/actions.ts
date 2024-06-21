@@ -51,6 +51,12 @@ export async function handleWrong(card: Card, practice: Practice) {
 }
 
 export async function createDeck(formData: FormData) {
+  if(!formData.get("name") || !formData.get("description")) 
+    return console.error("Missing name or description");
+  if(formData.get("name") === "" || formData.get("description") === "")
+    return console.error("Name or description cannot be empty");
+
+
   const session = await getServerSession(options);
   const prisma = new PrismaClient()
   const userEmail = session!.user?.email!;
@@ -62,8 +68,5 @@ export async function createDeck(formData: FormData) {
       description: formData.get("description") as string,
     }
   });
-  console.log(formData);
-  console.log();
-  console.log(formData.get("test"));
-  // revalidatePath(`/deck`);
+  revalidatePath(`/deck`);
 }
