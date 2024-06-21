@@ -16,11 +16,11 @@ export default function DeckForm() {
         <CardHeader><strong>Create New Deck</strong></CardHeader>
         <CardContent>
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label>Deck Name</Label>
+            <Label>Name</Label>
             <Input type="text" id="name" name='name' placeholder="My awesome deck" />
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label>Deck Description</Label>
+            <Label>Description</Label>
             <Input type="text" id="description" name='description' placeholder="Contains awesome cards" />
           </div>
         </CardContent>
