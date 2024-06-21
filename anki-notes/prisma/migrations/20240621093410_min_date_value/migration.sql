@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Practice" ALTER COLUMN "practicedAt" SET DEFAULT '1970-01-01 00:00:00 +00:00',
+ALTER COLUMN "successLevel" SET DEFAULT -1;
