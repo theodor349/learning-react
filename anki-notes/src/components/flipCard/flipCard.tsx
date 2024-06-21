@@ -5,18 +5,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { cn } from "@/lib/utils"
 import { useState } from 'react'
 import { handleCorrect, handleWrong } from "@/actions/actions"
+import { Card as CardModel, Practice } from '@prisma/client'
 
 type Props = {
-  card: AnkiCard
+  card: CardModel,
+  practice: Practice
 }
 
-type AnkiCard = {
-  id: string
-  question: string
-  answer: string
-}
-
-export default function FlipCard({ card }: Props) {
+export default function FlipCard({ card, practice }: Props) {
   const [isFlipped, setIsFlipped] = useState(false)
 
   return (
@@ -25,7 +21,7 @@ export default function FlipCard({ card }: Props) {
         <Card>
           <CardHeader><strong>Question</strong></CardHeader>
           <CardContent>
-            {card.question}
+            {card.front}
           </CardContent>
           <CardFooter className={"flex justify-center " + cn("gap-[10px]")}>
             <Button disabled={isFlipped} formAction={() => setIsFlipped(true)}>Show</Button>
@@ -36,11 +32,11 @@ export default function FlipCard({ card }: Props) {
             <Card>
             <CardHeader><strong>Answer</strong></CardHeader>
             <CardContent>
-              {card.answer}
+              {card.back}
             </CardContent>
             <CardFooter className={"flex justify-center " + cn("gap-[10px]")}>
-              <Button variant={"destructive"} formAction={async (formData: FormData) => {await handleWrong(card!); setIsFlipped(false)}}>Wrong</Button>
-              <Button type='submit' formAction={async (formData: FormData) => {await handleCorrect(card)}}>Correct</Button>
+              <Button variant={"destructive"} formAction={async (formData: FormData) => {await handleWrong(card, practice); setIsFlipped(false)}}>Wrong</Button>
+              <Button type='submit' formAction={async (formData: FormData) => {await handleCorrect(card, practice)}}>Correct</Button>
             </CardFooter>
           </Card>
         )}

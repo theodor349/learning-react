@@ -1,29 +1,49 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-// import PocketBase from "pocketbase"
+import { Card, Practice } from '@prisma/client'
+import { PrismaClient } from "@prisma/client"
 
-type AnkiCard = {
-  id: string
-  question: string
-  answer: string
+async function updatePractice(prisma: PrismaClient, card: Card, practice: Practice, successLevel: number) {
+  const date = new Date();
+
+  await prisma.practice.update({
+    where: { id: practice.id },
+    data: { 
+      practiced: true,
+      practicedAt: date,
+      streak: practice.streak + 1,
+      successLevel: successLevel
+     }
+  });
 }
 
-export async function handleCorrect(card: AnkiCard) {
+async function createNewPractice(prisma: PrismaClient, practice: Practice, streak: number) {
+  const daysToAdd = Math.pow(streak, 1.42);
   const date = new Date();
-  date.setDate(date.getDate() + 1);
-  // const pb = new PocketBase('http://127.0.0.1:8090');
-  // await pb.collection('cards').update(card.id, { nextPractice: date });
+  date.setDate(date.getDate() + daysToAdd)
 
+  console.log("Days to add: " + daysToAdd)
+  console.log("New date: " + date)
+
+  await prisma.practice.create({data: {
+    userId: practice.userId,
+    cardId: practice.cardId,
+    nextPractice: date,
+    streak: streak,
+  }})
+}
+
+export async function handleCorrect(card: Card, practice: Practice) {
+  const prisma = new PrismaClient();
+  await updatePractice(prisma, card, practice, 1);
+  await createNewPractice(prisma, practice, practice.streak + 1);
   revalidatePath(`/practice`);
 }
 
-export async function handleWrong(card: AnkiCard) {
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-
-  // const pb = new PocketBase('http://127.0.0.1:8090');
-  // await pb.collection('cards').update(card.id, { nextPractice: date });
-
+export async function handleWrong(card: Card, practice: Practice) {
+  const prisma = new PrismaClient();
+  await updatePractice(prisma, card, practice, 0);
+  await createNewPractice(prisma, practice, 0);
   revalidatePath(`/practice`);
 }

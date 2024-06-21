@@ -19,67 +19,17 @@ export default async function Practice({}: Props) {
   const prisma = new PrismaClient()
 
   const userEmail = session.user?.email!;
-  const userId = await prisma.user.findFirst({where: { email: userEmail}}).then((res) => {return res?.id!});
-  console.log("User ID: " + userId);
-  // await prisma.deck.create({
-  //   data: {
-  //     userId: userId,
-  //     name: "Test Deck",
-  //     description: "This is a test deck",
-  //   }
-  // })
+  const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
+  const practice = await prisma.practice.findFirst({where: {userId: userId, nextPractice: {lt: new Date()}, practiced: false}, orderBy: {nextPractice: "asc"}}).then((res) => {return res});
 
-  // await prisma.card.create({
-  //   data: {
-  //     deckId: "clxohehqq0001bdouz3er89m0",
-  //     front: "What is the capital of France?",
-  //     back: "Paris",
-  //   }
-  // })
-
-  // await prisma.card.create({
-  //   data: {
-  //     deckId: "clxohehqq0001bdouz3er89m0",
-  //     front: "What is the capital of Denmark?",
-  //     back: "Copenhagen",
-  //   }
-  // })
-
-  // await prisma.practice.create({
-  //   data: {
-  //     userId: userId,
-  //     cardId: "clxohhay00003bdou7soyje50",
-  //     streak: 0,
-  //   }
-  // })
-  // await prisma.practice.create({
-  //   data: {
-  //     userId: userId,
-  //     cardId: "clxohhty60007bdou0oahkvya",
-  //     streak: 0,
-  //   }
-  // })
-
-  
-  const date = new Date();
-  const filter = `nextPractice<'${
-    date.getUTCFullYear() + 
-    "-" + (date.getUTCMonth() < 10 ? "0" + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + 
-    "-" + (date.getUTCDate() < 10 ? "0" + (date.getUTCDate()) : date.getUTCDate()) + 
-    "T00:00:00.000Z"}'`;
-  var card: any | undefined;
-  prisma.practice.findFirst({where: {nextPractice: {lt: date}}}).card().then((res) => {card = res});
-  // await pb.collection('cards').getFirstListItem<AnkiCard>(filter)
-  //   .then((res) => {card = res})
-  //   .catch(() => {card = undefined});
-
-  if(card === undefined) {
+  if(practice === undefined || practice === null) {
     return (
       <OutOfCards/>
     )
   }
 
+  const card = await prisma.card.findUnique({where: {id: practice?.cardId}}).then((res) => {return res});
   return (
-    <FlipCard card={card}/>
+    <FlipCard card={card!} practice={practice!}/>
   )
 }
