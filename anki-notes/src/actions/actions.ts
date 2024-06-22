@@ -3,7 +3,7 @@
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from "next/cache";
-import { Card, Practice } from '@prisma/client'
+import { Deck, Card, Practice } from '@prisma/client'
 import { PrismaClient } from "@prisma/client"
 
 async function updatePractice(prisma: PrismaClient, card: Card, practice: Practice, successLevel: number) {
@@ -69,4 +69,55 @@ export async function createDeck(formData: FormData) {
     }
   });
   revalidatePath(`/deck`);
+}
+
+export async function updateDeck(formData: FormData, deck: Deck) {
+  if(!formData.get("name") || !formData.get("description")) 
+    return console.error("Missing name or description");
+  if(formData.get("name") === "" || formData.get("description") === "")
+    return console.error("Name or description cannot be empty");
+
+
+  const session = await getServerSession(options);
+  const prisma = new PrismaClient()
+  const userEmail = session!.user?.email!;
+  const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
+  const serverDeck = await prisma.deck.findUnique({where: {id: deck.id}}).then((res) => {return res});
+  if(!serverDeck) return console.error("Deck not found");
+  if(serverDeck?.userId !== userId) return console.error("Unauthorized");
+
+  await prisma.deck.update({where: {id: deck.id}, data: {
+    name: formData.get("name") as string,
+    description: formData.get("description") as string,
+  }});
+  revalidatePath(`/deck`);
+}
+
+export async function createCard(formData: FormData, deck: Deck) {
+  if(!formData.get("front") || !formData.get("back")) 
+    return console.error("Missing front or back");
+  if(formData.get("front") === "" || formData.get("back") === "")
+    return console.error("Front or back cannot be empty");
+
+
+  const session = await getServerSession(options);
+  const prisma = new PrismaClient()
+  const userEmail = session!.user?.email!;
+  const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
+  const serverDeck = await prisma.deck.findUnique({where: {id: deck.id}}).then((res) => {return res});
+  if(serverDeck?.userId !== userId) return console.error("Unauthorized");
+
+  const card = await prisma.card.create({ data: {
+    deckId: serverDeck.id,
+    front: formData.get("front") as string,
+    back: formData.get("back") as string,
+  }})
+
+  await prisma.practice.create({ data: {
+    userId: userId,
+    cardId: card.id,
+    nextPractice: new Date(),
+    streak: 0,
+  }})
+  revalidatePath(`/deck/${deck.id}`);
 }

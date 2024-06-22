@@ -1,0 +1,37 @@
+"use client"
+import React from 'react'
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
+import { useState } from 'react'
+import { createCard } from "@/actions/actions"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Deck } from '@prisma/client';
+
+interface Props {
+  deck: Deck
+}
+
+export default function CardForm({deck}: Props) {
+  return (
+    <form>
+      <Card>
+        <CardHeader><strong>Create New Card</strong></CardHeader>
+        <CardContent>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>Front</Label>
+            <Input type="text" id="front" name='front' placeholder="What is the capital of Denmark?" />
+          </div>
+          <div className="grid w-full max-w-sm items-center gap-1.5 py-2">
+            <Label>Back</Label>
+            <Input type="text" id="back" name='back' placeholder="Copenhagen" />
+          </div>
+        </CardContent>
+        <CardFooter className={"flex justify-center " + cn("gap-[10px]")}>
+          <Button type='submit' formAction={ async (data: FormData) => await createCard(data, deck)}>Create</Button>
+        </CardFooter>
+      </Card>
+    </form>
+  )
+}

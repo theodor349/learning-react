@@ -1,7 +1,8 @@
 import { getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
 import { PrismaClient } from "@prisma/client"
-// import DeckForm from '@/components/deckForm/deckForm';
+import DeckForm from '@/components/deckForm/deckForm';
+import CardForm from '@/components/cardForm/cardForm';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import CardTable from '@/components/cardTable/page';
 
@@ -23,15 +24,19 @@ export default async function DeckId({params}: Props) {
   return (
     <>
       <Tabs defaultValue="cards" className='py-2'>
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="cards">Cards</TabsTrigger>
-          <TabsTrigger value="create">Create</TabsTrigger>
+          <TabsTrigger value="edit">Edit Deck</TabsTrigger>
+          <TabsTrigger value="create">Create Card</TabsTrigger>
         </TabsList>
         <TabsContent value="cards">
           <CardTable cards={cards}/>
         </TabsContent>
+        <TabsContent value="edit">
+          <DeckForm deck={deck}/> 
+        </TabsContent>
         <TabsContent value="create">
-          {/* <CardForm/> */}
+          <CardForm deck={deck}/> 
         </TabsContent>
       </Tabs>
     </>
