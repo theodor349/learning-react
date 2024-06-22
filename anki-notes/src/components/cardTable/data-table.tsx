@@ -17,15 +17,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-interface DataTableProps<Card, TValue> {
+interface DataTableProps<TValue> {
   columns: ColumnDef<Card, TValue>[]
   data: Card[]
 }
 
-export function DataTable<Card, TValue>({
+export function DataTable<TValue>({
   columns,
   data,
-}: DataTableProps<Card, TValue>) {
+}: DataTableProps<TValue>) {
   const table = useReactTable<Card>({
     data,
     columns,
@@ -50,10 +50,8 @@ export function DataTable<Card, TValue>({
                   </TableHead>
                 )
               })}
-              <TableHead key="edit">
-              </TableHead>
-              <TableHead key="delete">
-              </TableHead>
+              <TableHead key="edit"/>
+              <TableHead key="delete"/>
             </TableRow>
           ))}
         </TableHeader>
@@ -70,10 +68,10 @@ export function DataTable<Card, TValue>({
                   </TableCell>
                 ))}
                 <TableCell key="edit">
-                  <Button size={"sm"} onClick={() => console.log("Edit: " + (data.at(row.index) as Card).id)}>Edit</Button>
+                  <Button size={"sm"} onClick={() => console.log("Edit: " + data.at(row.index)!.id)}>Edit</Button>
                 </TableCell>
                 <TableCell key="delete">
-                  <Button size={"sm"} variant={"destructive"} onClick={() => console.log("Delete: " + (data.at(row.index) as Card).id)}>Delete</Button>
+                  <Button size={"sm"} variant={"destructive"} onClick={() => console.log("Delete: " + data.at(row.index)!.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))

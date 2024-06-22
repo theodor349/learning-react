@@ -1,12 +1,15 @@
 "use client"
 
+import { redirect } from "next/navigation"
+import Link from 'next/link';
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-
+import { Deck } from "@prisma/client"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -16,15 +19,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+interface DataTableProps<TValue> {
+  columns: ColumnDef<Deck, TValue>[]
+  data: Deck[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -49,6 +52,8 @@ export function DataTable<TData, TValue>({
                   </TableHead>
                 )
               })}
+              <TableHead key="edit"/>
+              <TableHead key="delete"/>
             </TableRow>
           ))}
         </TableHeader>
@@ -64,6 +69,14 @@ export function DataTable<TData, TValue>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
+                <TableCell key="edit">
+                  <Button size={"sm"}>
+                    <Link href={`/deck/${data.at(row.index)!.id}`}>Edit</Link>
+                  </Button>
+                </TableCell>
+                <TableCell key="delete">
+                  <Button size={"sm"} variant={"destructive"} onClick={() => console.log("Delete: " + data.at(row.index)!.id)}>Delete</Button>
+                </TableCell>
               </TableRow>
             ))
           ) : (
