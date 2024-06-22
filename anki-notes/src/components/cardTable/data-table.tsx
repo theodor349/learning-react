@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import { Card } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import {
   Table,
@@ -16,16 +17,16 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+interface DataTableProps<Card, TValue> {
+  columns: ColumnDef<Card, TValue>[]
+  data: Card[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<Card, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
+}: DataTableProps<Card, TValue>) {
+  const table = useReactTable<Card>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -69,10 +70,10 @@ export function DataTable<TData, TValue>({
                   </TableCell>
                 ))}
                 <TableCell key="edit">
-                  <Button size={"sm"} onClick={() => console.log("Edit: " + data.at(row.index)?.id)}>Edit</Button>
+                  <Button size={"sm"} onClick={() => console.log("Edit: " + (data.at(row.index) as Card).id)}>Edit</Button>
                 </TableCell>
                 <TableCell key="delete">
-                  <Button size={"sm"} variant={"destructive"} onClick={() => console.log("Delete: " + data.at(row.index)?.id)}>Delete</Button>
+                  <Button size={"sm"} variant={"destructive"} onClick={() => console.log("Delete: " + (data.at(row.index) as Card).id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))
