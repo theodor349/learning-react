@@ -70,7 +70,7 @@ export function DataTable<TValue>({
                   </TableCell>
                 ))}
                 <TableCell key="edit">
-                  <Button size={"sm"}>
+                  <Button size={"sm"} asChild>
                     <Link href={`/deck/${data.at(row.index)!.id}`}>Edit</Link>
                   </Button>
                 </TableCell>

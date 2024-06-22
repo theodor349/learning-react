@@ -22,7 +22,7 @@ export default async function DeckId({params}: Props) {
 
   return (
     <>
-      <Tabs defaultValue="cards">
+      <Tabs defaultValue="cards" className='py-2'>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="cards">Cards</TabsTrigger>
           <TabsTrigger value="create">Create</TabsTrigger>

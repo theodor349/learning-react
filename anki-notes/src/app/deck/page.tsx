@@ -15,7 +15,7 @@ export default async function Deck() {
 
   return (
     <>
-      <Tabs defaultValue="decks">
+      <Tabs defaultValue="decks" className='py-2'>
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="decks">Decks</TabsTrigger>
           <TabsTrigger value="create">Create</TabsTrigger>
