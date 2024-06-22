@@ -3,6 +3,8 @@ import { options } from '@/app/api/auth/[...nextauth]/options';
 import { PrismaClient } from "@prisma/client"
 import DeckForm from '@/components/deckForm/deckForm';
 import DeckTable from '@/components/deckTable/page';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
 
 export default async function Deck() {
   const session = await getServerSession(options);
@@ -13,8 +15,18 @@ export default async function Deck() {
 
   return (
     <>
-      <DeckTable decks={decks}/>
-      <DeckForm/>
+      <Tabs defaultValue="decks">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="decks">Decks</TabsTrigger>
+          <TabsTrigger value="create">Create</TabsTrigger>
+        </TabsList>
+        <TabsContent value="decks">
+          <DeckTable decks={decks}/>
+        </TabsContent>
+        <TabsContent value="create">
+          <DeckForm/>
+        </TabsContent>
+      </Tabs>
     </>
   )
 }

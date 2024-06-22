@@ -9,7 +9,7 @@ type Props = {
 export default async function DeckTable({ decks } : Props) {
 
   return (
-    <div className="container mx-auto py-10">
+    <div>
       <DataTable columns={columns} data={decks} />
     </div>
   )
