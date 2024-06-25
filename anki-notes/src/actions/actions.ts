@@ -93,6 +93,28 @@ export async function updateDeck(formData: FormData, deck: Deck) {
   revalidatePath(`/deck`);
 }
 
+export async function editCard(formData: FormData, card: Card) {
+  if(!formData.get("front") || !formData.get("back")) 
+    return console.error("Missing front or back");
+  if(formData.get("front") === "" || formData.get("back") === "")
+    return console.error("Front or back cannot be empty");
+
+  const session = await getServerSession(options);
+  const prisma = new PrismaClient()
+  const userEmail = session!.user?.email!;
+  const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
+  const serverCard = await prisma.card.findUnique({where: {id: card.id}}).then((res) => {return res});
+  const serverDeck = await prisma.deck.findUnique({where: {id: serverCard?.deckId}}).then((res) => {return res});
+  if(serverDeck?.userId !== userId) return console.error("Unauthorized");
+
+  await prisma.card.update({where: {id: card.id}, data: {
+    front: formData.get("front") as string,
+    back: formData.get("back") as string,
+  }});
+
+  revalidatePath(`/card/${card.id}`);
+}
+
 export async function createCard(formData: FormData, deck: Deck) {
   if(!formData.get("front") || !formData.get("back")) 
     return console.error("Missing front or back");

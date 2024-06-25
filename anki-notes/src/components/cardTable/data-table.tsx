@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import Link from 'next/link';
 import { Card } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import {
@@ -68,7 +69,9 @@ export function DataTable<TValue>({
                   </TableCell>
                 ))}
                 <TableCell key="edit">
-                  <Button size={"sm"} onClick={() => console.log("Edit: " + data.at(row.index)!.id)}>Edit</Button>
+                  <Button size={"sm"} asChild>
+                    <Link href={`/card/${data.at(row.index)!.id}`}>Edit</Link>
+                  </Button>
                 </TableCell>
                 <TableCell key="delete">
                   <Button size={"sm"} variant={"destructive"} onClick={() => console.log("Delete: " + data.at(row.index)!.id)}>Delete</Button>
