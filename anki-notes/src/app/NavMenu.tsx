@@ -24,9 +24,6 @@ export default async function NavMenu() {
             <Link href={'/deck'}>Decks</Link>
           </li>
           <li>
-            <Link href={'/card'}>Cards</Link>
-          </li>
-          <li>
             <SignOutButton/>
           </li>
         </ul>
