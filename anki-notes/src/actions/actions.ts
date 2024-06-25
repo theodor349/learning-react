@@ -104,8 +104,7 @@ export async function editCard(formData: FormData, card: Card) {
   const userEmail = session!.user?.email!;
   const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
   const serverCard = await prisma.card.findUnique({where: {id: card.id}}).then((res) => {return res});
-  const serverDeck = await prisma.deck.findUnique({where: {id: serverCard?.deckId}}).then((res) => {return res});
-  if(serverDeck?.userId !== userId) return console.error("Unauthorized");
+  if(serverCard?.userId !== userId) return console.error("Unauthorized");
 
   await prisma.card.update({where: {id: card.id}, data: {
     front: formData.get("front") as string,
@@ -131,6 +130,7 @@ export async function createCard(formData: FormData, deck: Deck) {
 
   const card = await prisma.card.create({ data: {
     deckId: serverDeck.id,
+    userId: userId,
     front: formData.get("front") as string,
     back: formData.get("back") as string,
   }})

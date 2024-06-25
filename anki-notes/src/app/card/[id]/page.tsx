@@ -17,6 +17,7 @@ export default async function CardPage({params}: Props) {
   const userEmail = session!.user?.email!;
   const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
   const serverCard = await prisma.card.findUniqueOrThrow({where: {id: params.id}}).then((res) => {return res});
+  if(serverCard.userId !== userId) return console.error("Unauthorized");
 
   return (
     <CardForm card={serverCard}/>
