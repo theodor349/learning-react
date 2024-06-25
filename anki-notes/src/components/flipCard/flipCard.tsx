@@ -36,7 +36,7 @@ export default function FlipCard({ card, practice }: Props) {
             </CardContent>
             <CardFooter className={"flex justify-center " + cn("gap-[10px]")}>
               <Button variant={"destructive"} formAction={async (formData: FormData) => {await handleWrong(card, practice); setIsFlipped(false)}}>Wrong</Button>
-              <Button type='submit' formAction={async (formData: FormData) => {await handleCorrect(card, practice)}}>Correct</Button>
+              <Button formAction={async (formData: FormData) => {await handleCorrect(card, practice); setIsFlipped(false)}}>Correct</Button>
             </CardFooter>
           </Card>
         )}
