@@ -4,14 +4,12 @@ import FlipCard from '@/components/flipCard/flipCard';
 import OutOfCards from '@/components/flipCard/outOfCards';
 import { getServerSession } from 'next-auth';
 import { options } from '@/app/api/auth/[...nextauth]/options';
-import { PrismaClient } from "@prisma/client"
-
+import prisma from '@/lib/prisma'
 
 type Props = {}
 
 export default async function Practice({}: Props) {
   const session = await getServerSession(options);
-  const prisma = new PrismaClient()
   const userEmail = session!.user?.email!;
   const userId = await prisma.user.findUnique({where: { email: userEmail}}).then((res) => {return res?.id!});
   const practice = await prisma.practice.findFirst({where: {userId: userId, nextPractice: {lt: new Date()}, practiced: false}, orderBy: {nextPractice: "asc"}}).then((res) => {return res});
