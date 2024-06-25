@@ -14,7 +14,7 @@ export default async function NavMenu() {
     return (
       <nav className={styles.nav}>
         <div className='p-2'>
-          <Link href={'/'}>Anki Cards</Link>
+          <Link href={'/'}>Teaching Flipper</Link>
         </div>
         <ul className={styles.links}>
           <li>
