@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavMenu from "./NavMenu";
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +23,7 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col items-center w-[100%] max-w-screen">
             <NavMenu />
             {children}
+            <SpeedInsights />
           </div>
         </div>
       </body>
