@@ -1,3 +1,6 @@
+import React from 'react';
+import {CurrentTimeDisplay} from "@/app/layered-layout/currentTimeDisplay";
+
 export default function Page() {
   return(
     <div className={"w-full"}>
@@ -11,25 +14,6 @@ export default function Page() {
       </div>
     </div>
   )
-}
-
-function CurrentTimeDisplay() {
-  const now = new Date();
-  const hour = now.getHours();
-  const minutes = now.getMinutes();
-
-  const dayProgressed = (hour * 60 + minutes) / 1440;
-  const heightPerHour = 160;
-  const totalContentHeight = 24 * heightPerHour;
-  const currentLineTopPosition = dayProgressed * totalContentHeight - 3;
-
-  return (
-      <div className={'relative z-10 border-b-4 border-dotted border-red-500 ml-10'}
-        style={{
-          top: `${currentLineTopPosition}px`,
-        }}
-      ></div>
-  );
 }
 
 function HourDisplay() {
