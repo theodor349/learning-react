@@ -1,11 +1,35 @@
 export default function Page() {
   return(
     <div className={"w-full"}>
-
-      <HourDisplay/>
-
+      <div className={"relative w-full"}>
+        <div className={"absolute w-full"}>
+          <HourDisplay/>
+        </div>
+        <div className={"absolute w-full"}>
+          <CurrentTimeDisplay/>
+        </div>
+      </div>
     </div>
   )
+}
+
+function CurrentTimeDisplay() {
+  const now = new Date();
+  const hour = now.getHours();
+  const minutes = now.getMinutes();
+
+  const dayProgressed = (hour * 60 + minutes) / 1440;
+  const heightPerHour = 168;
+  const totalContentHeight = 24 * heightPerHour;
+  const currentLineTopPosition = dayProgressed * totalContentHeight;
+
+  return (
+      <div className={'relative z-10 border-b-4 border-dotted border-red-500'}
+        style={{
+          top: `${currentLineTopPosition}px`,
+        }}
+      ></div>
+  );
 }
 
 function HourDisplay() {
@@ -33,6 +57,7 @@ function HourLine({hour}: HourLineProps) {
       </div>
       <div className={"flex flex-col gap-10"}>
         <div/>
+        <div className={"w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
         <div className={"w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
         <div className={"w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
         {hour === 24 ? <div/> : <div className={"w-[calc(100%+38px)] border-b-2 border-[#b090e0] ml-[-38px]"} />}

@@ -12,16 +12,21 @@ export default function LearningLayout({children,}: {children: React.ReactNode})
       </div>
 
 
-      <div className={"bg-[#b090e0] flex flex-row justify-between items-end w-full p-2 rounded-t-2xl"}>
+      <div className={"bg-[#b090e0] flex flex-row justify-between items-end w-full p-2 rounded-t-2xl shadow-xl"}>
 
         {/* Week and day of week */}
-        <div className={"bg-[#400e8b] text-white text-lg w-12 h-12 rounded-2xl flex flex-col items-center justify-center"}>
-          4
+        <div className={"flex flex-col items-center text-[#400e8b]"}>
+          <div className={"text-sm font-thin text-center"}>
+            Week
+          </div>
+          <div className={"bg-[#400e8b] text-white text-lg w-12 h-12 rounded-2xl flex flex-col items-center justify-center"}>
+            4
+          </div>
         </div>
 
         {/* Date and controls */}
-        <div className={"flex flex-col items-center text-white"}>
-          <div className={"text-sm font-thin"}>
+        <div className={"flex flex-col items-center text-[#400e8b]"}>
+          <div className={"text-sm text-center"}>
             Thursday
           </div>
           <div className={"flex flex-col items-center flex-grow"}>
