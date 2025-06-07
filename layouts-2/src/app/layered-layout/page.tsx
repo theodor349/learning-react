@@ -19,12 +19,12 @@ function CurrentTimeDisplay() {
   const minutes = now.getMinutes();
 
   const dayProgressed = (hour * 60 + minutes) / 1440;
-  const heightPerHour = 168;
+  const heightPerHour = 160;
   const totalContentHeight = 24 * heightPerHour;
-  const currentLineTopPosition = dayProgressed * totalContentHeight;
+  const currentLineTopPosition = dayProgressed * totalContentHeight - 3;
 
   return (
-      <div className={'relative z-10 border-b-4 border-dotted border-red-500'}
+      <div className={'relative z-10 border-b-4 border-dotted border-red-500 ml-10'}
         style={{
           top: `${currentLineTopPosition}px`,
         }}
@@ -52,16 +52,30 @@ interface HourLineProps {
 function HourLine({hour}: HourLineProps) {
   return (
     <>
-      <div className={"text-sm text-right text-[#400e8b]"}>
+      <div className={"text-sm text-right text-[#400e8b] z-10"}>
         {hour === 24 ? "" : `${hour.toString().padStart(2, '0')}:00`}
       </div>
-      <div className={"flex flex-col gap-10"}>
-        <div/>
-        <div className={"w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
-        <div className={"w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
-        <div className={"w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
-        {hour === 24 ? <div/> : <div className={"w-[calc(100%+38px)] border-b-2 border-[#b090e0] ml-[-38px]"} />}
+      <div className={"flex flex-col"}>
+        <QuarterRow isHour={false}/>
+        <QuarterRow isHour={false}/>
+        <QuarterRow isHour={false}/>
+        {hour === 24 ? <div className={"h-10"}/> : <QuarterRow isHour={true}/>}
       </div>
+    </>
+  )
+}
+
+interface QuarterRowProps {
+  isHour: boolean;
+}
+function QuarterRow({isHour}: QuarterRowProps) {
+  return (
+    <>
+      {isHour ?
+        <div className={"h-10 w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0]"}/>
+        :
+        <div className={"h-10 w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
+      }
     </>
   )
 }
