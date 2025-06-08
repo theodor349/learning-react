@@ -32,7 +32,7 @@ export function CurrentTimeDisplay() {
   const currentLineTopPosition = dayProgressed * totalContentHeight - 3;
 
   return (
-    <div className={'relative z-10 border-b-4 border-dotted border-red-500 ml-10'}
+    <div className={'relative z-10 border-b-4 border-dotted border-red-500 ml-12'}
          style={{
            top: `${currentLineTopPosition}px`,
          }}

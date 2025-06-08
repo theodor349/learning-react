@@ -7,7 +7,7 @@ export default function LearningLayout({children,}: {children: React.ReactNode})
       {/* flex-grow, enables the element to grow on the vertical axis to take up all remaining space within its parent */}
       {/* w-full, sets its width to the parents' */}
       {/* overflow-auto, enables the content within to be scrolled if it is to large */}
-      <div className={"flex-grow w-full overflow-auto px-4"}>
+      <div className={"flex-grow w-full overflow-auto px-2"}>
         { children}
       </div>
 

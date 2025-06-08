@@ -20,7 +20,7 @@ function HourDisplay() {
   const hours = Array.from({ length: 24 }, (_, i) => i + 1);
 
   return (
-    <div className="w-full grid grid-cols-[30px_1fr] items-end gap-x-2"> {/* Example grid layout */}
+    <div className="w-full grid grid-cols-[42px_1fr] items-end gap-x-2"> {/* Example grid layout */}
       {hours.map((hour) => (
         <HourLine key={hour} hour={hour} />
       ))}
@@ -36,7 +36,7 @@ interface HourLineProps {
 function HourLine({hour}: HourLineProps) {
   return (
     <>
-      <div className={"text-sm text-right text-[#400e8b] z-10"}>
+      <div className={"text-sm text-center text-[#400e8b] z-10 translate-y-2"}>
         {hour === 24 ? "" : `${hour.toString().padStart(2, '0')}:00`}
       </div>
       <div className={"flex flex-col"}>
@@ -56,9 +56,9 @@ function QuarterRow({isHour}: QuarterRowProps) {
   return (
     <>
       {isHour ?
-        <div className={"h-10 w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0]"}/>
+        <div className={"h-10 w-[calc(100%)] border-b-2 border-[#b090e0] hover:bg-[rgba(176,144,224,0.25)]"}/>
         :
-        <div className={"h-10 w-[calc(100%+38px)] ml-[-38px] border-b-2 border-[#b090e0] border-dotted"}/>
+        <div className={"h-10 w-[calc(100%)] border-b-2 border-[#b090e0] border-dotted hover:bg-[rgba(176,144,224,0.25)]"}/>
       }
     </>
   )
