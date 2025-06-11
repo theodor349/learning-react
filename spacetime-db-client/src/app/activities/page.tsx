@@ -42,56 +42,75 @@ export default function Activities() {
   const [conn, setConn] = useState<DbConnection | null>(null);
 
   useEffect(() => {
-    console.log("Connecting to SpacetimeDB...");
-    if (!user) return;
-    console.log("User found:", user);
+    if (isLoading || !user) {
+      return;
+    }
 
-      const subscribeToQueries = (conn: DbConnection, queries: string[]) => {
-        conn
-        ?.subscriptionBuilder()
-        .onApplied(() => {
-          console.log('SDK client cache initialized.');
-        })
-        .subscribe(queries);
-      };
+    const fetchTokenAndConnect = async () => {
+      try {
+        const response = await fetch('/api/token');
+        if (!response.ok) {
+          throw new Error('Failed to fetch access token');
+        }
+        const { accessToken } = await response.json();
 
-      const onConnect = (
-        conn: DbConnection,
-        identity: Identity,
-        token: string
-      ) => {
-        setIdentity(identity);
-        setConnected(true);
-        localStorage.setItem('auth_token', token);
-        console.log(
-          'Connected to SpacetimeDB with identity:',
-          identity.toHexString()
+        console.log("Connecting to SpacetimeDB...");
+
+        const subscribeToQueries = (conn: DbConnection, queries: string[]) => {
+          conn
+          ?.subscriptionBuilder()
+          .onApplied(() => {
+            console.log('SDK client cache initialized.');
+          })
+          .subscribe(queries);
+        };
+
+        const onConnect = (
+          conn: DbConnection,
+          identity: Identity,
+          token: string
+        ) => {
+          setIdentity(identity);
+          setConnected(true);
+          localStorage.setItem('auth_token', token);
+          console.log(
+            'Connected to SpacetimeDB with identity:',
+            identity.toHexString()
+          );
+
+          subscribeToQueries(conn, ['SELECT * FROM Activity']);
+        };
+
+        const onDisconnect = () => {
+          console.log('Disconnected from SpacetimeDB');
+          setConnected(false);
+        };
+
+        const onConnectError = (_ctx: ErrorContext, err: Error) => {
+          console.log('Error connecting to SpacetimeDB:', err);
+        };
+
+        console.log("JWT: ", accessToken);
+        setConn(
+          DbConnection.builder()
+          .withUri('ws://localhost:3000')
+          .withModuleName('weekly-review-ui')
+          .withToken(accessToken)
+          .onConnect(onConnect)
+          .onDisconnect(onDisconnect)
+          .onConnectError(onConnectError)
+          .build()
         );
 
-        subscribeToQueries(conn, ['SELECT * FROM Activity']);
-      };
+      } catch (error) {
+        console.error('Error fetching token or connecting to SpacetimeDB:', error);
+      }
+    };
 
-      const onDisconnect = () => {
-        console.log('Disconnected from SpacetimeDB');
-        setConnected(false);
-      };
+    fetchTokenAndConnect();
 
-      const onConnectError = (_ctx: ErrorContext, err: Error) => {
-        console.log('Error connecting to SpacetimeDB:', err);
-      };
+  }, [isLoading, user]);
 
-      console.log("Connecting with sub: ", user.sub);
-      setConn(
-        DbConnection.builder()
-        .withUri('ws://localhost:3000')
-        .withModuleName('weekly-review-ui')
-        .withToken()
-        .onConnect(onConnect)
-        .onDisconnect(onDisconnect)
-        .onConnectError(onConnectError)
-        .build()
-      );
-  }, [isLoading]);
 
 
   const activities = useActivities(conn);
