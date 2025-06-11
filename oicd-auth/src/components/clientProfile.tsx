@@ -1,9 +1,9 @@
 'use client';
 
-import {useUser} from "@auth0/nextjs-auth0";
+import {requireAuthClient} from "@/lib/requireAuthClient"
 
 export default function ClientProfile() {
-  const { user, isLoading } = useUser();
+  const { user, isLoading } = requireAuthClient();
   return (
     <>
       {isLoading && <p>Loading...</p>}

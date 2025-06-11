@@ -1,6 +1,5 @@
 import ClientProfile from '@/components/clientProfile'
 import ServerProfile from '@/components/serverProfile'
-import {auth0} from "@/lib/auth0";
 
 export default async function Home() {
 
