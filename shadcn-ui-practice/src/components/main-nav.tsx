@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { Home, Settings, User, Info } from "lucide-react";
+import { CalendarDays, User, PlusCircle } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button"
 
 // Navigation item type definition
 interface NavItem {
@@ -13,10 +14,9 @@ interface NavItem {
 
 // Define the navigation items
 const navItems: NavItem[] = [
-  { name: 'Home', icon: Home, path: '/' },
-  { name: 'Settings', icon: Settings, path: '/settings' },
-  { name: 'Profile', icon: User, path: '/profile' },
-  { name: 'About', icon: Info, path: '/about' },
+  { name: 'Calendar', icon: CalendarDays, path: '/' },
+  { name: 'Add Entry', icon: PlusCircle, path: '/settings' },
+  { name: 'Manage', icon: User, path: '/profile' },
 ];
 
 export default function MainNav() {
@@ -41,25 +41,21 @@ export default function MainNav() {
       <nav className="
         hidden md:flex
         flex-col
-        h-screen w-60
+        h-screen
         bg-background
         border-r
-        p-6
+        p-2
       ">
         {/* Navigation links */}
-        <ul className="flex flex-col space-y-4">
+        <ul className="flex flex-col space-y-2">
           {navItems.map((item) => (
             <li key={item.name}>
               <Link
                 href={item.path}
-                className={cn(
-                  "flex items-center space-x-3 rounded-md px-3 py-2",
-                  "text-sm font-medium transition-colors",
-                  "hover:bg-accent hover:text-accent-foreground"
-                )}
+                className={buttonVariants({ variant: "ghost", className: "w-full" })}
               >
                 <item.icon className="h-5 w-5" />
-                <span>{item.name}</span>
+                <span className={"w-18"} >{item.name}</span>
               </Link>
             </li>
           ))}
