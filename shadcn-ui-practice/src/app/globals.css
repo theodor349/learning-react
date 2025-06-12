@@ -44,6 +44,9 @@
 }
 
 :root {
+  --nav-height: 53px; /* Set the height of the navigation bar */
+  --nav-height-mobile: 73px; /* Set the height of the navigation bar */
+
   --radius: 0.625rem;
   --background: oklch(0.922 0.051 296.24); /* #e9e2f3 */
   --foreground: oklch(0.18 0.013 296.24); /* #0c0910 */

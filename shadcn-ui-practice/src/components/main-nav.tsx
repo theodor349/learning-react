@@ -1,9 +1,17 @@
 import React from "react";
 import Link from "next/link";
-import { CalendarDays, User, PlusCircle } from "lucide-react";
+import { CalendarDays, Tags, Zap, PlusCircle } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger, navigationMenuTriggerStyle,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
 
 // Navigation item type definition
 interface NavItem {
@@ -14,16 +22,17 @@ interface NavItem {
 
 // Define the navigation items
 const navItems: NavItem[] = [
-  { name: 'Calendar', icon: CalendarDays, path: '/' },
-  { name: 'Add Entry', icon: PlusCircle, path: '/settings' },
-  { name: 'Manage', icon: User, path: '/profile' },
+  { name: 'Calendar', icon: CalendarDays, path: '/calendar' },
+  { name: 'Add Entry', icon: PlusCircle, path: '/entry' },
+  { name: 'Activities', icon: Zap, path: '/activity' },
+  { name: 'Categories ', icon: Tags, path: '/category' },
 ];
 
 export default function MainNav() {
   return (
     <>
       {/* Mobile Navigation - shown on small screens at bottom */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t bg-background">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t bg-background h-[var(--nav-height-mobile)]">
         <div className="flex justify-around items-center p-2">
           {navItems.map((item) => (
             <Link
@@ -40,26 +49,42 @@ export default function MainNav() {
       {/* Desktop Navigation - hidden on small screens, visible on md and up */}
       <nav className="
         hidden md:flex
-        flex-col
-        h-screen
+        h-[var(--nav-height)]
         bg-background
         border-r
         p-2
       ">
         {/* Navigation links */}
-        <ul className="flex flex-col space-y-2">
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.path}
-                className={buttonVariants({ variant: "ghost", className: "w-full" })}
-              >
-                <item.icon className="h-5 w-5" />
-                <span className={"w-18"} >{item.name}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <NavigationMenu>
+          <NavigationMenuList>
+            {navItems.map((item) => (
+              <NavigationMenuItem key={item.name}>
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link
+                    href={item.path}
+                    className="flex flex-row">
+                    <item.icon className="h-5 w-5 mr-1" />
+                    <span className="text-xs">{item.name}</span>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+
+
+        {/*<ul className="flex flex-row space-2">*/}
+        {/*  {navItems.map((item) => (*/}
+        {/*    <li key={item.name}>*/}
+        {/*      <Link*/}
+        {/*        href={item.path}*/}
+        {/*        className={buttonVariants({ variant: "ghost", className: "w-full" })}*/}
+        {/*      >*/}
+        {/*        <span className={"w-18"} >{item.name}</span>*/}
+        {/*      </Link>*/}
+        {/*    </li>*/}
+        {/*  ))}*/}
+        {/*</ul>*/}
       </nav>
     </>
   );
