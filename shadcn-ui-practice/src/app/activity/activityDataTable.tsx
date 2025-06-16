@@ -2,11 +2,15 @@
 
 import { Button } from "@/components/ui/button"
 
+import * as React from "react"
+
 import {
   ColumnDef,
+  SortingState,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -28,11 +32,18 @@ export function ActivityDataTable<TData, TValue>({
                                            columns,
                                            data,
                                          }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
     initialState: {
       pagination: {
         pageSize: 12
