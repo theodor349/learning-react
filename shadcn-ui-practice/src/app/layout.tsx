@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <body>
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
       <div className="flex flex-col min-h-screen">
         {/* Desktop Navigation - fixed at the top */}
         <div className="hidden md:block fixed top-0 left-0 right-0 z-40 border-b">
