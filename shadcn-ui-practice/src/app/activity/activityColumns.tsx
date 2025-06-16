@@ -43,19 +43,21 @@ export const columns: ColumnDef<Activity>[] = [
   {
     id: "actions",
     cell: ({row}) => {
-      const payment = row.original
+      const activity = row.original
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreVertical className="h-4 w-4"/>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>Change Category</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className={"flex justify-end"}>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <MoreVertical className="h-4 w-4"/>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>Change Category</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       )
     }
   }

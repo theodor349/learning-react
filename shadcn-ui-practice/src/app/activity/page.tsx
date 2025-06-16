@@ -244,7 +244,7 @@ const activities: Activity[] = [
 
 export default function Home() {
   return (
-    <div>
+    <div className={""}>
       <ActivityDataTable data={activities} key={"activity-data-table"} columns={columns} />
     </div>
   );
