@@ -48,7 +48,6 @@ export const columns: ColumnDef<Activity>[] = [
           <Button
             size={"sm"}
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <Filter className="h-4 w-4" />
           </Button>
@@ -71,7 +70,6 @@ export const columns: ColumnDef<Activity>[] = [
           </Button>
           <Button
             variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             <Filter className="h-4 w-4" />
           </Button>
