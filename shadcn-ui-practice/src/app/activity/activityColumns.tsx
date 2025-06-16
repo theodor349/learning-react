@@ -1,7 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreVertical, ArrowUpDown } from "lucide-react"
+import { MoreVertical, ArrowUpDown, Filter } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -36,27 +36,46 @@ export const columns: ColumnDef<Activity>[] = [
     accessorKey: "name",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Activity
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div className={"flex flex-row items-center"}>
+          <label className={"mr-2"}>Activity</label>
+          <Button
+            size={"sm"}
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className="h-4 w-4" />
+          </Button>
+          <Button
+            size={"sm"}
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <Filter className="h-4 w-4" />
+          </Button>
+        </div>
       )
     },
   },
   {
+    id: "categoryname",
     accessorKey: "category.name",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Category
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <div className={"flex flex-row items-center"}>
+          <label className={"mr-2"}>Category</label>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <Filter className="h-4 w-4" />
+          </Button>
+        </div>
       )
     },
   },

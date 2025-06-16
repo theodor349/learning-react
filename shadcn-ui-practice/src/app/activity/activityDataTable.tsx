@@ -1,13 +1,16 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 import * as React from "react"
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   SortingState,
   flexRender,
+  getFilteredRowModel,
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -33,6 +36,9 @@ export function ActivityDataTable<TData, TValue>({
                                            data,
                                          }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
 
   const table = useReactTable({
     data,
@@ -41,18 +47,40 @@ export function ActivityDataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
     initialState: {
       pagination: {
-        pageSize: 12
+        pageSize: 8
       }
     }
   })
 
   return (
     <div>
+      <div className="flex flex-col items-center p-2 space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+        <Input
+          placeholder="Filter activities..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <Input
+          placeholder="Filter categories..."
+          value={(table.getColumn("categoryname")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("categoryname")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
+
       <div className="border">
         <Table>
           <TableHeader>
