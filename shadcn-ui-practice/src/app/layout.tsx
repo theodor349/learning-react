@@ -41,6 +41,7 @@ export default function RootLayout({
         <main className="
             flex-grow
             flex flex-col
+            md:px-8
             pt-0 md:pt-[var(--nav-height)]
             pb-[var(--nav-height-mobile)] md:pb-0
           ">
