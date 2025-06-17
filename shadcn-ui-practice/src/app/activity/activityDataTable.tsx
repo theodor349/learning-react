@@ -62,6 +62,7 @@ export function ActivityDataTable<TData, TValue>({
 
   return (
     <div>
+      {/* TODO: Move to a popup menu, to save space */}
       <div className="flex flex-col items-center p-2 space-y-2 md:flex-row md:space-y-0 md:space-x-2">
         <Input
           placeholder="Filter activities..."
