@@ -1,13 +1,17 @@
 'use client'
 
-import {ActivityDataTable} from "./activityDataTable";
-import {columns} from "./activityColumns";
-import {activities} from "@/app/activity/data";
+import { DataTable } from "./components/dataTable";
+import { columns } from "./activityColumns";
+import { activities } from "@/app/activity/data";
 
-export default function Home() {
+export default function ActivityPage() {
   return (
-    <div className={"flex-grow md:pt-2"}>
-      <ActivityDataTable data={activities} key={"activity-data-table"} columns={columns} />
+    <div className="container mx-auto md:py-6">
+      <DataTable
+        data={activities} 
+        columns={columns} 
+        pageSize={10}
+      />
     </div>
   );
 }

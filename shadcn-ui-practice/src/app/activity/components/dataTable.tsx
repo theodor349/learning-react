@@ -1,10 +1,6 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-
 import * as React from "react"
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -25,20 +21,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  pageSize?: number
 }
 
-export function ActivityDataTable<TData, TValue>({
-                                           columns,
-                                           data,
-                                         }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  pageSize = 10,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data,
@@ -55,7 +52,7 @@ export function ActivityDataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: 10
+        pageSize
       }
     }
   })
@@ -67,18 +64,16 @@ export function ActivityDataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                    </TableHead>
-                  )
-                })}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -115,7 +110,7 @@ export function ActivityDataTable<TData, TValue>({
         >
           Previous
         </Button>
-        <label className={"min-w-24 text-center"}>
+        <label className="min-w-24 text-center">
           Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </label>
         <Button
