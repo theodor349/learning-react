@@ -14,17 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription, DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogClose,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import {DialogBody} from "next/dist/client/components/react-dev-overlay/ui/components/dialog";
-
-import {
   Command,
   CommandDialog,
   CommandEmpty,
