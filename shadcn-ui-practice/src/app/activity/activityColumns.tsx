@@ -61,8 +61,10 @@ export const columns: ColumnDef<Activity>[] = [
             size={"sm"}
             variant="ghost"
             onClick={() => setFilterOpen(true)}
+            className={"relative"}
           >
-            <Filter className="h-4 w-4" />
+              <Filter className="h-4 w-4" />
+            {inputValue.length > 0 && <div className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></div>}
           </Button>
           <CommandDialog open={filterOpen} onOpenChange={setFilterOpen} showCloseButton={false}>
             <CommandInput 
@@ -126,8 +128,10 @@ export const columns: ColumnDef<Activity>[] = [
           <Button
             variant="ghost"
             onClick={() => setFilterOpen(true)}
+            className={"relative"}
           >
             <Filter className="h-4 w-4" />
+            {inputValue.length > 0 && <div className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></div>}
           </Button>
           <CommandDialog open={filterOpen} onOpenChange={setFilterOpen} showCloseButton={false}>
             <CommandInput
