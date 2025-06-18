@@ -55,33 +55,13 @@ export function ActivityDataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: 8
+        pageSize: 10
       }
     }
   })
 
   return (
     <div>
-      {/* TODO: Move to a popup menu, to save space */}
-      <div className="flex flex-col items-center p-2 space-y-2 md:flex-row md:space-y-0 md:space-x-2">
-        <Input
-          placeholder="Filter activities..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <Input
-          placeholder="Filter categories..."
-          value={(table.getColumn("categoryname")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("categoryname")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
-
       <div className="border">
         <Table>
           <TableHeader>
