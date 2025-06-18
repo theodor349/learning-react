@@ -110,7 +110,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-4">
         <div className="flex items-center space-x-2">
           <p className="text-sm text-gray-500">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
