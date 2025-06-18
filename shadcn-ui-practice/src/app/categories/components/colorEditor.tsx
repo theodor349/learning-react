@@ -25,7 +25,6 @@ type ColorShade = {
 
 type ColorFamily = {
   name: string;
-  baseHex: string;
   shades: ColorShade[];
 }
 
@@ -42,98 +41,82 @@ export function ColorEditor({
   const colorFamilies: ColorFamily[] = [
     {
       name: "Red",
-      baseHex: "#FF0000",
       shades: [
-        { hex: "#FFCCCB", name: "Light" },
-        { hex: "#FF0000", name: "Normal" },
-        { hex: "#B22222", name: "Dark" },
-        { hex: "#8B0000", name: "Very Dark" }
-      ]
-    },
-    {
-      name: "Blue",
-      baseHex: "#0000FF",
-      shades: [
-        { hex: "#ADD8E6", name: "Light" },
-        { hex: "#0000FF", name: "Normal" },
-        { hex: "#00008B", name: "Dark" },
-        { hex: "#191970", name: "Very Dark" }
-      ]
-    },
-    {
-      name: "Green",
-      baseHex: "#008000",
-      shades: [
-        { hex: "#90EE90", name: "Light" },
-        { hex: "#008000", name: "Normal" },
-        { hex: "#006400", name: "Dark" },
-        { hex: "#004000", name: "Very Dark" }
+        { hex: "#FF8C8C", name: "Light" },
+        { hex: "#FF3B3B", name: "Normal" },
+        { hex: "#D60000", name: "Dark" },
       ]
     },
     {
       name: "Orange",
-      baseHex: "#FFA500",
       shades: [
-        { hex: "#FFD580", name: "Light" },
-        { hex: "#FFA500", name: "Normal" },
-        { hex: "#FF8C00", name: "Dark" },
-        { hex: "#D2691E", name: "Very Dark" }
-      ]
-    },
-    {
-      name: "Purple",
-      baseHex: "#800080",
-      shades: [
-        { hex: "#D8BFD8", name: "Light" },
-        { hex: "#800080", name: "Normal" },
-        { hex: "#4B0082", name: "Dark" },
-        { hex: "#2E0854", name: "Very Dark" }
+        { hex: "#FFBF80", name: "Light" },
+        { hex: "#FF8C00", name: "Normal" },
+        { hex: "#FF4500", name: "Dark" },
       ]
     },
     {
       name: "Yellow",
-      baseHex: "#FFFF00",
       shades: [
         { hex: "#FFFACD", name: "Light" },
-        { hex: "#FFFF00", name: "Normal" },
-        { hex: "#FFD700", name: "Dark" },
-        { hex: "#B8860B", name: "Very Dark" }
+        { hex: "#FFD700", name: "Normal" },
+        { hex: "#DAA520", name: "Dark" },
+      ]
+    },
+    {
+      name: "Green",
+      shades: [
+        { hex: "#8AFF8A", name: "Light" },
+        { hex: "#32CD32", name: "Normal" },
+        { hex: "#009900", name: "Dark" },
+      ]
+    },
+    {
+      name: "Teal",
+      shades: [
+        { hex: "#80CBC4", name: "Light" },
+        { hex: "#00BFA5", name: "Normal" },
+        { hex: "#00897B", name: "Dark" },
+      ]
+    },
+    {
+      name: "Blue",
+      shades: [
+        { hex: "#A3D9FF", name: "Light" },
+        { hex: "#1E90FF", name: "Normal" },
+        { hex: "#0000CC", name: "Dark" },
+      ]
+    },
+    {
+      name: "Purple",
+      shades: [
+        { hex: "#DDA0DD", name: "Light" },
+        { hex: "#9932CC", name: "Normal" },
+        { hex: "#6A0DAD", name: "Dark" },
       ]
     },
     {
       name: "Pink",
-      baseHex: "#FFC0CB",
       shades: [
-        { hex: "#FFE4E1", name: "Light" },
-        { hex: "#FFC0CB", name: "Normal" },
-        { hex: "#FF69B4", name: "Dark" },
-        { hex: "#C71585", name: "Very Dark" }
-      ]
-    },
-    {
-      name: "Brown",
-      baseHex: "#A52A2A",
-      shades: [
-        { hex: "#DEB887", name: "Light" },
-        { hex: "#A52A2A", name: "Normal" },
-        { hex: "#8B4513", name: "Dark" },
-        { hex: "#5C3317", name: "Very Dark" }
+        { hex: "#FFB6C1", name: "Light" },
+        { hex: "#FF69B4", name: "Normal" },
+        { hex: "#C71585", name: "Dark" },
       ]
     },
     {
       name: "Grey",
-      baseHex: "#808080",
       shades: [
-        { hex: "#D3D3D3", name: "Light" },
-        { hex: "#808080", name: "Normal" },
-        { hex: "#696969", name: "Dark" },
-        { hex: "#000000", name: "Black" }
+        { hex: "#E0E0E0", name: "Light" },
+        { hex: "#A9A9A9", name: "Normal" },
+        { hex: "#595959", name: "Dark" },
       ]
     }
   ]
 
   React.useEffect(() => {
     setSelectedColor(initialColor)
+    // Reset selected family when dialog opens/closes
+    setSelectedFamily(null)
   }, [initialColor, open])
 
   const handleColorFamilySelect = (family: ColorFamily) => {
@@ -162,14 +145,14 @@ export function ColorEditor({
           {selectedFamily ? (
             // Show shades of the selected color family
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col items-center justify-center gap-4">
                 {selectedFamily.shades.map((shade) => (
                   <button
                     key={shade.hex}
                     type="button"
                     onClick={() => handleShadeSelect(shade)}
                     className={`
-                      w-full h-24 rounded-md transition-all duration-200 flex flex-col items-center justify-center hover:scale-105
+                      w-full h-24 rounded-md transition-all duration-200 flex flex-col items-center justify-center hover:scale-105 border border-primary/50
                     `}
                     style={{ 
                       backgroundColor: shade.hex,
@@ -190,8 +173,8 @@ export function ColorEditor({
                   type="button"
                   onClick={() => handleColorFamilySelect(family)}
                   className={`
-                      w-full h-24 rounded-md transition-all duration-200 flex flex-col items-center justify-center hover:scale-105
-                    `}                  style={{ backgroundColor: family.baseHex }}
+                      w-full h-24 rounded-md transition-all duration-200 flex flex-col items-center justify-center hover:scale-105 border border-primary/50
+                    `}                  style={{ backgroundColor: family.shades[1].hex }}
                   aria-label={`Select ${family.name} colors`}
                 >
                 </button>
