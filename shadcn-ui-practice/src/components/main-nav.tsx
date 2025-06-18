@@ -25,7 +25,7 @@ const navItems: NavItem[] = [
   { name: 'Calendar', icon: CalendarDays, path: '/calendar' },
   { name: 'Add Entry', icon: PlusCircle, path: '/entry' },
   { name: 'Activities', icon: Zap, path: '/activities' },
-  { name: 'Categories ', icon: Tags, path: '/category' },
+  { name: 'Categories ', icon: Tags, path: '/categories' },
 ];
 
 export default function MainNav() {
