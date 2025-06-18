@@ -70,20 +70,25 @@ export const columns: ColumnDef<Activity>[] = [
               value={inputValue}
               onValueChange={setInputValue}
               onKeyDown={handleKeyDown}
+              autoFocus
             />
             <CommandList>
-              <CommandEmpty>No activities found</CommandEmpty>
+              <div className="overflow-hidden p-1">
                 {filteredActivities.map((activity) => (
-                  <CommandItem 
+                  <div
                     key={activity.id}
-                    onSelect={() => {
-                      column.setFilterValue(inputValue)
-                      setFilterOpen(false)
-                    }}
+                    className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none"
                   >
                     <span>{activity.name}</span>
-                  </CommandItem>
+                  </div>
                 ))}
+                <div className="-mx-1 h-px bg-border my-1"></div>
+                <div
+                  className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none text-muted-foreground"
+                >
+                  Press Enter to filter or Esc to cancel
+                </div>
+              </div>
             </CommandList>
           </CommandDialog>
         </div>
@@ -129,31 +134,25 @@ export const columns: ColumnDef<Activity>[] = [
               value={inputValue}
               onValueChange={setInputValue}
               onKeyDown={handleKeyDown}
+              autoFocus
             />
             <CommandList>
-              <CommandEmpty>No categories found</CommandEmpty>
-              <CommandGroup heading="Categories">
+              <div className="overflow-hidden p-1">
                 {filteredCategories.map((category) => (
-                  <CommandItem 
-                    key={category.id} 
-                    onSelect={() => {
-                      column.setFilterValue(inputValue)
-                      setFilterOpen(false)
-                    }}
+                  <div 
+                    key={category.id}
+                    className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none"
                   >
                     <span>{category.name}</span>
-                  </CommandItem>
+                  </div>
                 ))}
-                <CommandSeparator />
-                <CommandItem 
-                  onSelect={() => {
-                    column.setFilterValue("")
-                    setFilterOpen(false)
-                  }}
+                <div className="-mx-1 h-px bg-border my-1"></div>
+                <div 
+                  className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none text-muted-foreground"
                 >
-                  Clear Filter
-                </CommandItem>
-              </CommandGroup>
+                  Press Enter to filter or Esc to cancel
+                </div>
+              </div>
             </CommandList>
           </CommandDialog>
         </div>
