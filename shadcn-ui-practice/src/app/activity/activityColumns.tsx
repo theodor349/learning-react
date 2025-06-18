@@ -73,18 +73,19 @@ export const columns: ColumnDef<Activity>[] = [
               autoFocus
             />
             <CommandList>
-              <div className="overflow-hidden p-1">
-                {filteredActivities.map((activity) => (
-                  <div
-                    key={activity.id}
-                    className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none"
-                  >
-                    <span>{activity.name}</span>
-                  </div>
-                ))}
-                <div className="-mx-1 h-px bg-border my-1"></div>
+              <div className={"flex flex-col"}>
+                <div className="overflow-hidden p-1">
+                  {filteredActivities.map((activity) => (
+                    <div
+                      key={activity.id}
+                      className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none"
+                    >
+                      <span>{activity.name}</span>
+                    </div>
+                  ))}
+                </div>
                 <div
-                  className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none text-muted-foreground"
+                  className="sticky bottom-0 border-t bg-popover mt-auto flex items-center gap-2 px-2 py-1.5 text-sm select-none text-muted-foreground"
                 >
                   Press Enter to filter or Esc to cancel
                 </div>
@@ -109,7 +110,7 @@ export const columns: ColumnDef<Activity>[] = [
         }
       }
 
-      const filteredCategories = categories.filter(category => 
+      const filteredCategories = categories.filter(category =>
         category.name.toLowerCase().includes(inputValue.toLowerCase())
       )
 
@@ -129,26 +130,27 @@ export const columns: ColumnDef<Activity>[] = [
             <Filter className="h-4 w-4" />
           </Button>
           <CommandDialog open={filterOpen} onOpenChange={setFilterOpen} showCloseButton={false}>
-            <CommandInput 
-              placeholder="Filter categories..." 
+            <CommandInput
+              placeholder="Filter categories..."
               value={inputValue}
               onValueChange={setInputValue}
               onKeyDown={handleKeyDown}
               autoFocus
             />
             <CommandList>
-              <div className="overflow-hidden p-1">
-                {filteredCategories.map((category) => (
-                  <div 
-                    key={category.id}
-                    className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none"
-                  >
-                    <span>{category.name}</span>
-                  </div>
-                ))}
-                <div className="-mx-1 h-px bg-border my-1"></div>
-                <div 
-                  className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none text-muted-foreground"
+              <div className={"flex flex-col"}>
+                <div className="overflow-hidden p-1">
+                  {filteredCategories.map((category) => (
+                    <div
+                      key={category.id}
+                      className="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none"
+                    >
+                      <span>{category.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div
+                  className="sticky bottom-0 border-t bg-popover mt-auto flex items-center gap-2 px-2 py-1.5 text-sm select-none text-muted-foreground"
                 >
                   Press Enter to filter or Esc to cancel
                 </div>
