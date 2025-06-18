@@ -18,9 +18,25 @@ import { SortOrderEditor } from "./components/sortOrderEditor"
 
 export const columns: ColumnDef<Category>[] = [
   {
+    accessorKey: "color",
+    header: "",
+    cell: ({ row }) => {
+      const color = row.getValue("color") as string
+      return (
+        <div className="flex items-center">
+          <div
+            className="h-6 w-6 rounded-full border border-solid border-primary/50"
+            style={{ backgroundColor: color }}
+          />
+        </div>
+      )
+    },
+    enableColumnFilter: false,
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => (
-      <ColumnHeader column={column} title="Name" />
+      <ColumnHeader column={column} title="Name" showFilter={true} items={categories} getItemLabel={(category) => category.name} getItemKey={(category) => category.id} filterFn={(category, query) => category.name.toLowerCase().includes(query.toLowerCase())} />
     ),
     cell: ({ row }) => {
       return <div>{row.getValue("name")}</div>
@@ -29,28 +45,11 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "sortOrder",
     header: ({ column }) => (
-      <ColumnHeader column={column} title="Sort Order" />
+      <ColumnHeader column={column} title="Sort Order" showFilter={false} items={categories} getItemLabel={(category => category.sortOrder.toString())} getItemKey={(category => category.id)} filterFn={(category, query) => category.name.toLowerCase().includes(query.toLowerCase())} />
     ),
     cell: ({ row }) => {
       return <div>{row.getValue("sortOrder")}</div>
     },
-  },
-  {
-    accessorKey: "color",
-    header: "Color",
-    cell: ({ row }) => {
-      const color = row.getValue("color") as string
-      return (
-        <div className="flex items-center">
-          <div
-            className="h-6 w-6 rounded-full mr-2"
-            style={{ backgroundColor: color }}
-          />
-          <span>{color}</span>
-        </div>
-      )
-    },
-    enableColumnFilter: false,
   },
   {
     id: "actions",
