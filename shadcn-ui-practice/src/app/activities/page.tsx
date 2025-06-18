@@ -2,7 +2,7 @@
 
 import { DataTable } from "./components/dataTable";
 import { columns } from "./activityColumns";
-import { activities } from "@/app/activity/data";
+import { activities } from "@/app/activities/data";
 
 export default function ActivityPage() {
   return (

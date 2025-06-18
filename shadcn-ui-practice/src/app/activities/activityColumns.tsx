@@ -3,7 +3,7 @@
 import * as React from "react"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreVertical } from "lucide-react"
-import { Activity, Category, activities, categories } from "@/app/activity/data";
+import { Activity, Category, activities, categories } from "@/app/activities/data";
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -66,7 +66,7 @@ export const columns: ColumnDef<Activity>[] = [
       const activity = row.original
 
       const handleSelectCategory = (category: Category) => {
-        // In a real app, this would update the activity category
+        // In a real app, this would update the activities category
         console.log(`Changing ${activity.name} category to ${category.name}`)
       }
 
