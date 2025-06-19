@@ -8,6 +8,7 @@ import {Label} from "@/components/ui/label"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import {ChevronDown, PlusCircle, Trash} from "lucide-react"
 import {ActivityInput} from "@/app/addentry/activityInput";
+import { toast } from "sonner"
 
 export default function AddEntryPage() {
   // Helper to round date to nearest 15 minutes
@@ -83,11 +84,6 @@ export default function AddEntryPage() {
     // Filter out empty activity inputs
     const validActivities = activityInputs.filter(activity => activity.trim() !== "")
 
-    if (validActivities.length === 0) {
-      alert("Please enter at least one activity")
-      return
-    }
-
     // Here you would normally send this data to your backend
     console.log("Submitting entry:", {
       timestamp,
@@ -98,8 +94,10 @@ export default function AddEntryPage() {
     setActivityInputs([""])
     setTimestamp(roundToNearestFifteen(new Date()))
 
-    // Show success message
-    alert("Entry added successfully!")
+    // Show success toast notification with more details
+    toast.success("Entry added successfully!", {
+      description: `Added ${validActivities.length} ${validActivities.length === 1 ? 'activity' : 'activities'} for ${timestamp.toLocaleString()}`,
+    })
   }
 
   return (

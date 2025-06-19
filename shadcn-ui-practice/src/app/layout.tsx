@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MainNav from "@/components/main-nav";
+import {Toaster, ToasterProps} from "sonner";
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,6 +50,20 @@ export default function RootLayout({
           {children}
         </main>
       </div>
+      <Toaster
+        position="top-right"
+        richColors
+        closeButton
+        expand={true}
+        toastOptions={{
+          // Default duration for all toasts
+          duration: 3000,
+          // Custom styling
+        }}
+        style={{
+          zIndex: 9999,
+        }}
+      />
     </body>
     </html>
   );
