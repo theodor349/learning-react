@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { activities } from "@/app/activities/data"
-import { Check, ChevronDown, Clock, Plus, Trash, X } from "lucide-react"
+import { Check, ChevronDown, PlusCircle, Trash, X } from "lucide-react"
 
 export default function AddEntryPage() {
   // Helper to round date to nearest 15 minutes
@@ -221,14 +221,16 @@ export default function AddEntryPage() {
             </div>
           ))}
 
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 p-0"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-          </Button>
+          <div className={"flex flex-row justify-end"}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={addActivityInput}
+            >
+              <PlusCircle className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         {/* Submit button */}
