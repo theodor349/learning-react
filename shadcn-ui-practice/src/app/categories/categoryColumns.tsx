@@ -45,7 +45,7 @@ export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "sortOrder",
     header: ({ column }) => (
-      <ColumnHeader column={column} title="Sort Order" showFilter={false} items={categories} getItemLabel={(category => category.sortOrder.toString())} getItemKey={(category => category.id)} filterFn={(category, query) => category.name.toLowerCase().includes(query.toLowerCase())} />
+      <ColumnHeader column={column} title="Rank" showFilter={false} items={categories} getItemLabel={(category => category.sortOrder.toString())} getItemKey={(category => category.id)} filterFn={(category, query) => category.name.toLowerCase().includes(query.toLowerCase())} />
     ),
     cell: ({ row }) => {
       return <div>{row.getValue("sortOrder")}</div>
