@@ -1,25 +1,13 @@
 "use client"
 
 import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { activities } from "@/app/activities/data"
-import { Check, ChevronDown, PlusCircle, Trash, X } from "lucide-react"
+import {Button} from "@/components/ui/button"
+import {Calendar} from "@/components/ui/calendar"
+import {Input} from "@/components/ui/input"
+import {Label} from "@/components/ui/label"
+import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
+import {ChevronDown, PlusCircle, Trash} from "lucide-react"
+import {ActivityInput} from "@/app/addentry/activityInput";
 
 export default function AddEntryPage() {
   // Helper to round date to nearest 15 minutes
@@ -126,7 +114,7 @@ export default function AddEntryPage() {
               <Label htmlFor="date-picker" className="px-1">
                 Date
               </Label>
-                              <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+              <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
@@ -239,76 +227,5 @@ export default function AddEntryPage() {
         </Button>
       </form>
     </div>
-  )
-}
-
-interface ActivityInputProps {
-  value: string
-  onChange: (value: string) => void
-  className?: string
-}
-
-function ActivityInput({ value, onChange, className }: ActivityInputProps) {
-  const [open, setOpen] = React.useState(false)
-
-  // Filter activities based on input
-  const filteredActivities = activities.filter((activity) =>
-    activity.name.toLowerCase().includes(value.toLowerCase())
-  )
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div className={`relative ${className}`}>
-          <Input
-            placeholder="Enter an activity..."
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full"
-            onFocus={() => setOpen(true)}
-          />
-          {value && (
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
-              onClick={() => onChange("")}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      </PopoverTrigger>
-      <PopoverContent className="p-0" align="start">
-        <Command>
-          <CommandInput placeholder="Search activities..." />
-          <CommandList>
-            <CommandEmpty>No activities found.</CommandEmpty>
-            <CommandGroup>
-              {filteredActivities.map((activity) => (
-                <CommandItem
-                  key={activity.id}
-                  onSelect={() => {
-                    onChange(activity.name)
-                    setOpen(false)
-                  }}
-                  className="flex items-center gap-2"
-                >
-                  <div
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: activity.category.hexColor }}
-                  />
-                  {activity.name}
-                  {value === activity.name && (
-                    <Check className="ml-auto h-4 w-4" />
-                  )}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
   )
 }
