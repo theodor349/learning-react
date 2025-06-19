@@ -107,21 +107,24 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
                   )}
                 </CommandItem>
               ))}
+            </CommandGroup>
 
-              {/* Add a custom activity option when it doesn't exist and there's input */}
-              {showAddOption && (
+
+            {/* Add a custom activity option when it doesn't exist */}
+            {showAddOption && (
+              <CommandGroup>
                 <CommandItem
                   onSelect={() => {
                     onChange(value)
                     setOpen(false)
                   }}
-                  className="flex items-center gap-2 border-t mt-1 pt-1"
+                  className="flex items-center gap-2"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Add <strong>"{value}"</strong> as a new activity</span>
                 </CommandItem>
-              )}
-            </CommandGroup>
+              </CommandGroup>
+            )}
           </CommandList>
         </Command>
       </PopoverContent>
