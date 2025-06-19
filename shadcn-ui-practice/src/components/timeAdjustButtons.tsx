@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 
-interface TimeAdjustButtonsProps {
+export interface TimeAdjustButtonsProps {
   onAdjust: (minutes: number) => void
   className?: string
 }

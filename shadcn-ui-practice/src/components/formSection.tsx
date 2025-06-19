@@ -1,7 +1,7 @@
 import * as React from "react"
 import { SectionHeading } from "@/components/sectionHeading"
 
-interface FormSectionProps {
+export interface FormSectionProps {
   title: string
   description?: string
   className?: string

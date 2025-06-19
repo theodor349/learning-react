@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-interface DateTimePickerProps {
+export interface DateTimePickerProps {
   value: Date
   onChange: (date: Date) => void
   onReset?: () => void

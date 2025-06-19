@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 
-interface FormActionsProps {
+export interface FormActionsProps {
   onCancel?: () => void
   submitLabel?: string
   cancelLabel?: string

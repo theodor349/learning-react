@@ -1,6 +1,6 @@
 import * as React from "react"
 
-interface SectionHeadingProps {
+export interface SectionHeadingProps {
   title: string
   description?: string
   className?: string
