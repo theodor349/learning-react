@@ -120,7 +120,6 @@ export default function AddEntryPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Timestamp section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">When did it happen?</h2>
           <div className="flex gap-4">
             {/* Date picker */}
             <div className="flex flex-col gap-3">
@@ -203,8 +202,6 @@ export default function AddEntryPage() {
 
         {/* Activities section */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">What did you do?</h2>
-
           {activityInputs.map((activity, index) => (
             <div key={index} className="flex items-center gap-2">
               <ActivityInput
@@ -226,12 +223,11 @@ export default function AddEntryPage() {
 
           <Button
             type="button"
-            variant="outline"
-            onClick={addActivityInput}
-            className="w-full"
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 p-0"
           >
             <Plus className="h-4 w-4 mr-2" />
-            Add Another Activity
           </Button>
         </div>
 
