@@ -6,7 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Check, Plus, X} from "lucide-react";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 
-interface ActivityInputProps {
+export interface ActivityInputProps {
   value: string
   onChange: (value: string) => void
   className?: string
