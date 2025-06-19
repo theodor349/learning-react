@@ -6,7 +6,7 @@ import {Calendar} from "@/components/ui/calendar"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
-import {ChevronDown, PlusCircle, Trash} from "lucide-react"
+import {ChevronDown, PlusCircle, TimerReset, Trash} from "lucide-react"
 import {ActivityInput} from "@/app/addentry/activityInput";
 import { toast } from "sonner"
 
@@ -97,23 +97,18 @@ export default function AddEntryPage() {
   }
 
   return (
-    <div className="container py-8 max-w-3xl">
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Timestamp section */}
-        <div className="space-y-4">
-          <div className="flex gap-4">
-            {/* Date picker */}
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="date-picker" className="px-1">
-                Date
-              </Label>
+    <div className="container p-2 md:py-10 max-w-xl mx-auto">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-8">
+          {/* Timestamp section */}
+          <div className="space-y-5 bg-muted/30 p-4 rounded-md">
+            <div className="flex flex-row gap-2">
+              {/* Date picker */}
               <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     id="date-picker"
-                    className="w-32 justify-between font-normal"
+                    className="flex-grow justify-between font-normal bg-background/80 hover:bg-background"
                   >
                     {timestamp.toLocaleDateString()}
                     <ChevronDown className="h-4 w-4" />
@@ -138,88 +133,85 @@ export default function AddEntryPage() {
                   />
                 </PopoverContent>
               </Popover>
-            </div>
-            {/* Time picker */}
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="time-picker" className="px-1">
-                Time
-              </Label>
-              <div className="flex gap-2">
-                <Input
-                  type="time"
-                  id="time-picker"
-                  step="900" // 15 minutes (15 * 60 seconds)
-                  value={`${String(timestamp.getHours()).padStart(2, '0')}:${String(timestamp.getMinutes()).padStart(2, '0')}`}
-                  onChange={(e) => {
-                    const [hours, minutes] = e.target.value.split(':').map(Number)
-                    const newDate = new Date(timestamp)
-                    newDate.setHours(hours)
-                    newDate.setMinutes(minutes)
-                    setTimestamp(newDate)
-                  }}
-                  className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            <Button type="button" variant="outline" size="sm" onClick={subtractFifteenMinutes}>
-              -15 min
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size={"sm"}
-              onClick={resetTimestamp}
-              title="Reset to current time"
-            >
-              Now
-            </Button>
-            <Button type="button" variant="outline" size="sm" onClick={addFifteenMinutes}>
-              +15 min
-            </Button>
-          </div>
-        </div>
-
-        {/* Activities section */}
-        <div className="space-y-4">
-          {activityInputs.map((activity, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <ActivityInput
-                value={activity}
-                onChange={(value) => updateActivityInput(index, value)}
-                className="flex-1"
-              />
               <Button
                 type="button"
-                variant="ghost"
+                variant="secondary"
                 size="icon"
-                onClick={() => removeActivityInput(index)}
-                title="Remove activity"
+                onClick={resetTimestamp}
+                title="Reset to current time"
               >
-                <Trash className="h-4 w-4" />
+                <TimerReset/>
               </Button>
             </div>
-          ))}
 
-          <div className={"flex flex-row justify-end"}>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={addActivityInput}
-            >
-              <PlusCircle className="h-4 w-4" />
-            </Button>
+            <div className="flex flex-row justify-center gap-2">
+              <Button type="button" variant="outline" onClick={subtractFifteenMinutes} className="bg-background/80 hover:bg-background">
+                -15 min
+              </Button>
+
+              <Input
+                type="time"
+                id="time-picker"
+                step="900" // 15 minutes (15 * 60 seconds)
+                value={`${String(timestamp.getHours()).padStart(2, '0')}:${String(timestamp.getMinutes()).padStart(2, '0')}`}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(':').map(Number)
+                  const newDate = new Date(timestamp)
+                  newDate.setHours(hours)
+                  newDate.setMinutes(minutes)
+                  setTimestamp(newDate)
+                }}
+                className="bg-background/80 appearance-none font-mono flex-grow text-center"
+              />
+
+              <Button type="button" variant="outline" onClick={addFifteenMinutes} className="bg-background/80 hover:bg-background">
+                +15 min
+              </Button>
+            </div>
           </div>
-        </div>
 
-        {/* Submit button */}
-        <Button type="submit" className="w-full">
-          Save Entry
-        </Button>
-      </form>
+          {/* Activities section */}
+          <div className="space-y-1 bg-muted/30 p-4 rounded-md">
+            {activityInputs.map((activity, index) => (
+              <div key={index} className="flex items-center gap-2 p-1 rounded">
+                <ActivityInput
+                  value={activity}
+                  onChange={(value) => updateActivityInput(index, value)}
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeActivityInput(index)}
+                  title="Remove activity"
+                >
+                  <Trash className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+
+            <div className="flex justify-center pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={addActivityInput}
+              >
+                <PlusCircle className="h-4 w-4" />
+                Add Activity
+              </Button>
+            </div>
+          </div>
+
+          {/* Submit button */}
+          <Button
+            type="submit"
+            className="w-full py-6 text-base font-medium transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+          >
+            Add Entry
+          </Button>
+        </form>
     </div>
   )
 }
