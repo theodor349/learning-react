@@ -1,9 +1,9 @@
 import * as React from "react";
-import {activities} from "@/app/activities/data";
+import {activities, categories} from "@/app/activities/data";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {Check, X} from "lucide-react";
+import {Check, Plus, X} from "lucide-react";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command";
 
 interface ActivityInputProps {
@@ -19,6 +19,15 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
   const filteredActivities = activities.filter((activity) =>
     activity.name.toLowerCase().includes(value.toLowerCase())
   )
+
+  // Check if the input value exists in predefined activities
+  const activityExists = activities.some(activity => 
+    activity.name.toLowerCase() === value.toLowerCase()
+  )
+
+  // Show the "Add new activity" option only when there's a non-empty value 
+  // and it doesn't exist in our predefined list
+  const showAddOption = value.trim() !== "" && !activityExists
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -62,7 +71,22 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
             }}
           />
           <CommandList>
-            <CommandEmpty>No activities found.</CommandEmpty>
+            <CommandEmpty>
+              {value.trim() !== "" ? (
+                <CommandItem
+                  onSelect={() => {
+                    onChange(value)
+                    setOpen(false)
+                  }}
+                  className="flex items-center gap-2 text-sm cursor-pointer"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Add <strong>"{value}"</strong> as a new activity</span>
+                </CommandItem>
+              ) : (
+                "No activities found."
+              )}
+            </CommandEmpty>
             <CommandGroup>
               {filteredActivities.map((activity) => (
                 <CommandItem
@@ -83,6 +107,20 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
                   )}
                 </CommandItem>
               ))}
+
+              {/* Add a custom activity option when it doesn't exist and there's input */}
+              {showAddOption && (
+                <CommandItem
+                  onSelect={() => {
+                    onChange(value)
+                    setOpen(false)
+                  }}
+                  className="flex items-center gap-2 border-t mt-1 pt-1"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Add <strong>"{value}"</strong> as a new activity</span>
+                </CommandItem>
+              )}
             </CommandGroup>
           </CommandList>
         </Command>
