@@ -126,7 +126,7 @@ export default function AddEntryPage() {
               <Label htmlFor="date-picker" className="px-1">
                 Date
               </Label>
-              <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                              <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
