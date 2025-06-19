@@ -8,6 +8,8 @@
     "@radix-ui/react-navigation-menu": "^1.2.13",
     "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
-    "cmdk": "^1.1.1"
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
+    "react-day-picker": "^9.7.0"
   }
 }
