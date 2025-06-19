@@ -27,7 +27,10 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
           <Input
             placeholder="Enter an activity..."
             value={value}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={(e) => {
+              onChange(e.target.value);
+              setOpen(true); // Open the popover whenever the user types
+            }}
             className="w-full"
             onClick={() => setOpen(true)}
           />
@@ -37,7 +40,10 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
               variant="ghost"
               size="icon"
               className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
-              onClick={() => onChange("")}
+              onClick={() => {
+                onChange("");
+                setOpen(false);
+              }}
             >
               <X className="h-4 w-4"/>
             </Button>
@@ -48,6 +54,8 @@ export function ActivityInput({value, onChange, className}: ActivityInputProps) 
         <Command>
           <CommandInput 
             placeholder="Search activities..."
+            value={value}
+            onValueChange={onChange}
             onFocus={(e) => {
               // Prevent this focus event from causing the popover to close
               e.stopPropagation();
