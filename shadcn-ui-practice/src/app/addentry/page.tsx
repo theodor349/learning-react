@@ -90,10 +90,6 @@ export default function AddEntryPage() {
       activities: validActivities
     })
 
-    // Reset the form
-    setActivityInputs([""])
-    setTimestamp(roundToNearestFifteen(new Date()))
-
     // Show success toast notification with more details
     toast.success("Entry added successfully!", {
       description: `Added ${validActivities.length} ${validActivities.length === 1 ? 'activity' : 'activities'} for ${timestamp.toLocaleString()}`,
