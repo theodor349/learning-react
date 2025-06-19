@@ -23,7 +23,7 @@ interface NavItem {
 // Define the navigation items
 const navItems: NavItem[] = [
   { name: 'Calendar', icon: CalendarDays, path: '/calendar' },
-  { name: 'Add Entry', icon: PlusCircle, path: '/entry' },
+  { name: 'Add Entry', icon: PlusCircle, path: '/addentry' },
   { name: 'Activities', icon: Zap, path: '/activities' },
   { name: 'Categories ', icon: Tags, path: '/categories' },
 ];
@@ -71,20 +71,6 @@ export default function MainNav() {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-
-
-        {/*<ul className="flex flex-row space-2">*/}
-        {/*  {navItems.map((item) => (*/}
-        {/*    <li key={item.name}>*/}
-        {/*      <Link*/}
-        {/*        href={item.path}*/}
-        {/*        className={buttonVariants({ variant: "ghost", className: "w-full" })}*/}
-        {/*      >*/}
-        {/*        <span className={"w-18"} >{item.name}</span>*/}
-        {/*      </Link>*/}
-        {/*    </li>*/}
-        {/*  ))}*/}
-        {/*</ul>*/}
       </nav>
     </>
   );
