@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { format, parseISO, addHours, isWithinInterval, differenceInMinutes } from 'date-fns';
 import { calendarData, Entry, Activity } from '@/app/calendar/data';
 import AddEntryDialog from './AddEntryDialog';
@@ -9,17 +9,14 @@ interface DayViewProps {
   date: Date;
 }
 
-interface TimeBlockProps {
-  hour: number;
-  minute: number;
-  onTimeBlockClick: (hour: number, minute: number) => void;
-  entries: Entry[];
-}
-
 const DayView = ({ date }: DayViewProps) => {
   const [selectedTime, setSelectedTime] = useState<{ hour: number; minute: number } | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState<Entry | null>(null);
+
+  // Reference for time marker
+  const [currentTimeTop, setCurrentTimeTop] = useState(0);
+  const [showTimeMarker, setShowTimeMarker] = useState(false);
 
   // Create array of hours (0-23)
   const hours = Array.from({ length: 24 }, (_, i) => i);
@@ -51,19 +48,109 @@ const DayView = ({ date }: DayViewProps) => {
     return formatDateForComparison(entry.StartTime) === today;
   });
 
+  // Update current time marker position
+  useEffect(() => {
+    const updateTimeMarker = () => {
+      const now = new Date();
+      const totalMinutes = now.getHours() * 60 + now.getMinutes();
+      setCurrentTimeTop(totalMinutes);
+
+      // Only show time marker if viewing current date
+      const today = new Date();
+      setShowTimeMarker(format(date, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd'));
+    };
+
+    // Update immediately and then every minute
+    updateTimeMarker();
+    const interval = setInterval(updateTimeMarker, 60000);
+
+    return () => clearInterval(interval);
+  }, [date]);
+
   return (
     <div className="relative">
-      <div className="calendar-grid pb-20">
-        {hours.map((hour) => (
-          <TimeBlock 
-            key={hour} 
-            hour={hour} 
-            minute={0} 
-            onTimeBlockClick={handleTimeBlockClick}
-            entries={todaysEntries}
-          />
-        ))}
-      </div>
+      <main className="flex-grow w-full overflow-y-auto custom-scrollbar relative">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4">
+          <div className="relative w-full">
+            {/* Timeline background grid */}
+            <div className="absolute w-full grid grid-cols-[60px_1fr] -z-10">
+              {hours.map((hour) => (
+                <React.Fragment key={hour}>
+                  <div className="text-xs md:text-sm text-right text-muted-foreground pr-2 md:pr-4 -translate-y-2">
+                    {hour > 0 ? `${String(hour).padStart(2, '0')}:00` : ''}
+                  </div>
+                  <div className="flex flex-col border-l border-secondary">
+                    {[0, 1, 2, 3].map((quarter) => (
+                      <div 
+                        key={quarter}
+                        className={`h-[15px] w-full border-b ${quarter === 3 ? 'border-secondary' : 'border-secondary/50 border-dashed'} hover:bg-primary/10 cursor-pointer`}
+                        onClick={() => handleTimeBlockClick(hour, quarter * 15)}
+                      />
+                    ))}
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Current Time Marker */}
+            {showTimeMarker && (
+              <div 
+                className="absolute w-[calc(100%-60px)] ml-[60px] h-0.5 bg-red-500 z-10"
+                style={{ top: `${currentTimeTop}px` }}
+              />
+            )}
+
+            {/* Events Container */}
+            <div className="relative w-[calc(100%-60px)] ml-[60px] h-[1440px]">
+              {todaysEntries.map((entry, index) => {
+                const startTime = parseISO(entry.StartTime);
+                const startHour = startTime.getHours();
+                const startMinute = startTime.getMinutes();
+
+                // Calculate top position based on start time (minutes from midnight)
+                const topPosition = startHour * 60 + startMinute;
+
+                // Calculate height based on duration
+                let height;
+                if (entry.EndTime) {
+                  const endTime = parseISO(entry.EndTime);
+                  const duration = differenceInMinutes(endTime, startTime);
+                  height = duration;
+                } else {
+                  // Default height if no end time
+                  height = 60; // 1 hour default
+                }
+
+                // Get primary category for styling
+                const primaryCategory = entry.Activities.reduce((prev, current) => {
+                  return prev.category.sortOrder < current.category.sortOrder ? prev : current;
+                }).category;
+
+                // Format title from activities
+                const title = entry.Activities.map(activity => activity.name).join(' + ');
+
+                return (
+                  <div 
+                    key={`${entry.StartTime}-${index}`}
+                    className="absolute w-full p-0.5"
+                    style={{ top: `${topPosition}px`, height: `${height}px` }}
+                    onClick={() => handleEntryClick(entry)}
+                  >
+                    <div className="h-full bg-secondary/50 border-l-4 rounded-r-lg p-2 flex flex-col justify-center shadow-sm cursor-pointer"
+                         style={{ borderLeftColor: primaryCategory.color }}
+                    >
+                      <p className="font-semibold text-primary text-sm">{title}</p>
+                      <p className="text-xs text-primary/80">
+                        {format(startTime, 'HH:mm')} - {entry.EndTime ? format(parseISO(entry.EndTime), 'HH:mm') : 'ongoing'}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </main>
 
       <AddEntryDialog 
         isOpen={isDialogOpen} 
@@ -75,114 +162,5 @@ const DayView = ({ date }: DayViewProps) => {
   );
 };
 
-const TimeBlock = ({ hour, minute, onTimeBlockClick, entries }: TimeBlockProps) => {
-  // Create minutes for each quarter hour
-  const minutes = [0, 15, 30, 45];
-
-  // Used for checking if an entry falls within this time block
-  const timeBlockStart = new Date().setHours(hour, minute, 0, 0);
-
-  return (
-    <div className="time-block relative">
-      <div className="hour-label sticky left-0 bg-background z-10 w-16 pr-2 text-right text-sm text-muted-foreground">
-        {format(new Date().setHours(hour, 0, 0, 0), 'h a')}
-      </div>
-
-      <div className="hour-block border-t border-gray-200 h-[60px] relative">
-        {minutes.map((min, index) => (
-          <div 
-            key={min}
-            className={`minute-block h-[15px] ${index > 0 ? 'border-t border-dotted border-gray-200' : ''}`}
-            onClick={() => onTimeBlockClick(hour, min)}
-          />
-        ))}
-
-        {/* Render entries that start within this hour */}
-        {entries.map((entry, index) => {
-          const startTime = parseISO(entry.StartTime);
-          const startHour = startTime.getHours();
-          const startMinute = startTime.getMinutes();
-
-          // Skip if this entry doesn't start in this hour block
-          if (startHour !== hour) return null;
-
-          // Calculate entry height and position
-          const topPosition = (startMinute / 60) * 100;
-          let height;
-          let duration;
-
-          if (entry.EndTime) {
-            const endTime = parseISO(entry.EndTime);
-            duration = differenceInMinutes(endTime, startTime);
-            height = (duration / 60) * 100;
-          } else {
-            // Default to 12 hours if no end time
-            duration = 12 * 60;
-            height = 1200; // 12 hours
-          }
-
-          // Get primary category (lowest sort order)
-          const primaryCategory = entry.Activities.reduce((prev, current) => {
-            return prev.category.sortOrder < current.category.sortOrder ? prev : current;
-          }).category;
-
-          // Format title from activities
-          const title = entry.Activities.map(activity => activity.name).join(' + ');
-
-          // Determine what information to display based on duration
-          let contentToDisplay;
-          if (duration < 15) {
-            contentToDisplay = (
-              <div className="truncate">{title}</div>
-            );
-          } else if (duration < 60) {
-            contentToDisplay = (
-              <>
-                <div className="font-medium truncate">{title}</div>
-                <div className="text-xs">
-                  {format(startTime, 'h:mm a')} - {format(parseISO(entry.EndTime!), 'h:mm a')}
-                </div>
-              </>
-            );
-          } else {
-            // For entries >= 1 hour
-            const hours = Math.floor(duration / 60);
-            const mins = duration % 60;
-            contentToDisplay = (
-              <>
-                <div className="font-medium truncate">{title}</div>
-                <div className="text-xs">
-                  {format(startTime, 'h:mm a')} - {entry.EndTime ? format(parseISO(entry.EndTime), 'h:mm a') : 'No end time'}
-                </div>
-                {entry.EndTime && (
-                  <div className="text-xs">
-                    Duration: {hours}h {mins > 0 ? `${mins}m` : ''}
-                  </div>
-                )}
-              </>
-            );
-          }
-
-          return (
-            <div
-              key={`${entry.StartTime}-${index}`}
-              className="absolute left-16 right-0 overflow-hidden rounded px-2 py-1 text-xs cursor-pointer"
-              style={{
-                top: `${topPosition}%`,
-                height: `${Math.min(height, 100)}%`,
-                backgroundColor: primaryCategory.color,
-                color: '#ffffff',
-                zIndex: 5
-              }}
-              onClick={() => onTimeBlockClick(hour, startMinute)}
-            >
-              {contentToDisplay}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
 
 export default DayView;

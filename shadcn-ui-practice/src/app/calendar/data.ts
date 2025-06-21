@@ -1,8 +1,23 @@
 export const calendarData = [
   {
+    "StartTime": "2025-06-20T22:00:00Z",
+    "EndTime": "2025-06-21T00:00:00Z",
+    "Activities": [
+      {
+        "id": 101,
+        "name": "Sleep",
+        "category": {
+          "id": "sleep",
+          "name": "sleep",
+          "sortOrder": 1,
+          "color": "#400e8b"
+        }
+      }
+    ]
+  },
+  {
     "StartTime": "2025-06-21T00:00:00Z",
     "EndTime": "2025-06-21T01:30:00Z",
-    "Color": "#FF5733",
     "Activities": [
       {
         "id": 101,
@@ -19,7 +34,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T01:30:00Z",
     "EndTime": "2025-06-21T02:00:00Z",
-    "Color": "#33FF57",
     "Activities": [
       {
         "id": 102,
@@ -36,7 +50,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T02:00:00Z",
     "EndTime": "2025-06-21T04:45:00Z",
-    "Color": "#3357FF",
     "Activities": [
       {
         "id": 103,
@@ -63,7 +76,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T04:45:00Z",
     "EndTime": "2025-06-21T05:30:00Z",
-    "Color": "#FF33A8",
     "Activities": [
       {
         "id": 105,
@@ -80,7 +92,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T05:30:00Z",
     "EndTime": "2025-06-21T07:00:00Z",
-    "Color": "#A833FF",
     "Activities": [
       {
         "id": 106,
@@ -97,7 +108,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T07:00:00Z",
     "EndTime": "2025-06-21T09:15:00Z",
-    "Color": "#33FFA8",
     "Activities": [
       {
         "id": 107,
@@ -114,7 +124,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T09:15:00Z",
     "EndTime": "2025-06-21T09:45:00Z",
-    "Color": "#FF5733",
     "Activities": [
       {
         "id": 108,
@@ -131,7 +140,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T09:45:00Z",
     "EndTime": "2025-06-21T12:00:00Z",
-    "Color": "#5733FF",
     "Activities": [
       {
         "id": 109,
@@ -158,7 +166,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T12:00:00Z",
     "EndTime": "2025-06-21T13:00:00Z",
-    "Color": "#33FF57",
     "Activities": [
       {
         "id": 111,
@@ -175,7 +182,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T13:00:00Z",
     "EndTime": "2025-06-21T15:30:00Z",
-    "Color": "#FF33A8",
     "Activities": [
       {
         "id": 112,
@@ -202,7 +208,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T15:30:00Z",
     "EndTime": "2025-06-21T16:00:00Z",
-    "Color": "#A833FF",
     "Activities": [
       {
         "id": 114,
@@ -219,7 +224,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T16:00:00Z",
     "EndTime": "2025-06-21T18:00:00Z",
-    "Color": "#33FFA8",
     "Activities": [
       {
         "id": 115,
@@ -246,7 +250,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T18:00:00Z",
     "EndTime": "2025-06-21T20:30:00Z",
-    "Color": "#FF5733",
     "Activities": [
       {
         "id": 117,
@@ -263,7 +266,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T20:30:00Z",
     "EndTime": "2025-06-21T22:00:00Z",
-    "Color": "#5733FF",
     "Activities": [
       {
         "id": 118,
@@ -280,7 +282,6 @@ export const calendarData = [
   {
     "StartTime": "2025-06-21T22:00:00Z",
     "EndTime": null,
-    "Color": "#33FF57",
     "Activities": [
       {
         "id": 119,
