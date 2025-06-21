@@ -26,8 +26,9 @@ export function CategorySelector({
 }: CategorySelectorProps) {
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder="Select a category..." />
-      <CommandList>
+      <Command>
+        <CommandInput placeholder="Select a category..." />
+        <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         {categories.map((category) => (
           <CommandItem 
@@ -47,6 +48,7 @@ export function CategorySelector({
           </CommandItem>
         ))}
       </CommandList>
+      </Command>
     </CommandDialog>
   )
 }

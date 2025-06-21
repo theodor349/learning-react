@@ -33,14 +33,15 @@ export function FilterDialog<T>({
 }: FilterDialogProps<T>) {
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange} showCloseButton={false}>
-      <CommandInput
-        placeholder={placeholder}
-        value={inputValue}
-        onValueChange={onInputChange}
-        onKeyDown={onKeyDown}
-        autoFocus
-      />
-      <CommandList>
+      <Command>
+        <CommandInput
+          placeholder={placeholder}
+          value={inputValue}
+          onValueChange={onInputChange}
+          onKeyDown={onKeyDown}
+          autoFocus
+        />
+        <CommandList>
         <div className="flex flex-col">
           <div className="overflow-hidden p-1">
             {items.map((item) => (
@@ -57,6 +58,7 @@ export function FilterDialog<T>({
           </div>
         </div>
       </CommandList>
+      </Command>
     </CommandDialog>
   )
 }

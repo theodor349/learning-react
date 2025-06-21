@@ -6,9 +6,9 @@ import {Calendar} from "@/components/ui/calendar"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
-import {ChevronDown, PlusCircle, TimerReset, Trash} from "lucide-react"
-import {ActivityInput} from "@/app/addentry/activityInput";
+import {ChevronDown, PlusCircle, TimerReset, Trash, Search} from "lucide-react"
 import { toast } from "sonner"
+import { ActivitySelector } from "@/app/addentry/ActivitySelector"
 
 export default function AddEntryPage() {
   // Helper to round date to nearest 15 minutes
@@ -28,14 +28,18 @@ export default function AddEntryPage() {
   // State to control the date picker popover
   const [datePickerOpen, setDatePickerOpen] = React.useState(false)
 
-
+  // Track which activity input is currently active
+  const [activeInput, setActiveInput] = React.useState<number | null>(null)
 
   // Activity inputs
   const [activityInputs, setActivityInputs] = React.useState<string[]>([""])
 
   // Add another activity input field
   const addActivityInput = () => {
-    setActivityInputs([...activityInputs, ""])
+    const newIndex = activityInputs.length;
+    setActivityInputs([...activityInputs, ""]);
+    // Set this new input as active after a short delay to allow for state update
+    setTimeout(() => setActiveInput(newIndex), 50);
   }
 
   // Remove an activity input field
@@ -96,9 +100,25 @@ export default function AddEntryPage() {
     })
   }
 
-  return (
+      // Close the command input when clicking outside
+      const formRef = React.useRef<HTMLFormElement>(null);
+
+      React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        setActiveInput(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+      }, []);
+
+      return (
     <div className="container p-2 md:py-10 max-w-xl mx-auto">
-        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-8">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 md:space-y-8">
           {/* Timestamp section */}
           <div className="space-y-5 bg-muted/30 p-4 rounded-md">
             <div className="flex flex-row gap-2">
@@ -171,14 +191,41 @@ export default function AddEntryPage() {
           </div>
 
           {/* Activities section */}
-          <div className="space-y-1 bg-muted/30 p-4 rounded-md">
+          <div className="space-y-1 bg-muted/30 p-4 rounded-md relative">
+            {/* ActivitySelector component to be shown when an input is focused */}
+            <ActivitySelector
+              activeInput={activeInput}
+              setActiveInput={setActiveInput}
+              values={activityInputs}
+              onChange={updateActivityInput}
+            />
+
             {activityInputs.map((activity, index) => (
               <div key={index} className="flex items-center gap-2 p-1 rounded">
-                <ActivityInput
-                  value={activity}
-                  onChange={(value) => updateActivityInput(index, value)}
-                  className="flex-1"
-                />
+                <div className="relative flex-1">
+                  <Input
+                    placeholder="Enter an activity..."
+                    value={activity}
+                    onClick={() => setActiveInput(index)}
+                    readOnly
+                    className="w-full pr-10"
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
+                    onClick={() => {
+                      if (activity) {
+                        updateActivityInput(index, "");
+                      } else {
+                        setActiveInput(index);
+                      }
+                    }}
+                  >
+                    {activity ? <Trash className="h-4 w-4" /> : <Search className="h-4 w-4" />}
+                  </Button>
+                </div>
                 <Button
                   type="button"
                   variant="ghost"
