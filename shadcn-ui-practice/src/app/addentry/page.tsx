@@ -208,21 +208,6 @@ export default function AddEntryPage() {
                     readOnly
                     className="w-full pr-10"
                   />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 p-0"
-                    onClick={() => {
-                      if (activity) {
-                        updateActivityInput(index, "");
-                      } else {
-                        setActiveInput(index);
-                      }
-                    }}
-                  >
-                    {activity ? <Trash className="h-4 w-4" /> : <Search className="h-4 w-4" />}
-                  </Button>
                 </div>
                 <Button
                   type="button"

@@ -20,7 +20,6 @@ export function ActivitySelector({
 }: ActivitySelectorProps) {
   const [inputValue, setInputValue] = React.useState("");
   const [isMounted, setIsMounted] = React.useState(false);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
   const inputRef = React.useRef<HTMLDivElement>(null);
 
   // Handle global keyboard events for Escape
@@ -70,40 +69,19 @@ export function ActivitySelector({
     return null;
   }
 
-  // Desktop version - position under the active input
-  if (isDesktop) {
-    return (
-      <div 
-        ref={inputRef} 
-        className="absolute left-0 right-0 top-full z-50 mt-1"
-      >
-        <SimpleCommandContent
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          handleSelect={handleSelect}
-          isDesktop={true}
-          onClose={closeSelector}
-        />
-      </div>
-    );
-  }
-
-  // Mobile version - fixed position at the top of the screen
-  return createPortal(
-    <div className="fixed inset-0 z-50 flex flex-col bg-background/80 backdrop-blur-sm">
+  return (
+    <div
+      ref={inputRef}
+      className="fixed left-0 right-0 top-0 z-50 mt-1"
+    >
       <div className="w-full max-w-md mx-auto mt-16 p-4">
         <SimpleCommandContent
           inputValue={inputValue}
           setInputValue={setInputValue}
           handleSelect={handleSelect}
-          isDesktop={false}
           onClose={closeSelector}
         />
-        <div className="text-center text-xs text-muted-foreground mt-2">
-          Use ↑ and ↓ to navigate, Enter to select, Esc to cancel
-        </div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 }

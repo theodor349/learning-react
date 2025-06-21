@@ -10,7 +10,6 @@ interface SimpleCommandContentProps {
   inputValue: string;
   setInputValue: (value: string) => void;
   handleSelect: (value: string) => void;
-  isDesktop: boolean;
   onClose: () => void;
 }
 
@@ -18,7 +17,6 @@ export function SimpleCommandContent({
   inputValue,
   setInputValue,
   handleSelect,
-  isDesktop,
   onClose,
 }: SimpleCommandContentProps) {
   const [highlightedIndex, setHighlightedIndex] = React.useState<number | null>(null);
@@ -123,16 +121,6 @@ export function SimpleCommandContent({
           className="border-none shadow-none focus-visible:ring-0 px-0 py-1 h-8"
           autoFocus
         />
-        {!isDesktop && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="ml-auto -mr-2 h-8 px-2"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-        )}
       </div>
 
       {/* Results list */}
@@ -201,11 +189,9 @@ export function SimpleCommandContent({
           </div>
         )}
       </div>
-      {isDesktop && (
-        <div className="text-xs text-muted-foreground text-center border-t py-1">
-          Use ↑ and ↓ to navigate, Enter to select
-        </div>
-      )}
+      <div className="text-xs text-muted-foreground text-center border-t py-1">
+        Use ↑ and ↓ to navigate, Enter to select
+      </div>
     </div>
   );
 }
