@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { activities } from "@/app/activities/data";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Check, Plus, Search } from "lucide-react";
 
