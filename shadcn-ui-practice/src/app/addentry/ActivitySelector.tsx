@@ -69,12 +69,27 @@ export function ActivitySelector({
     return null;
   }
 
-  return (
-    <div
-      ref={inputRef}
-      className="fixed left-0 right-0 top-0 z-50 mt-1"
+  return createPortal(
+    <div 
+      className="fixed inset-0 z-50 flex flex-col bg-background/80 backdrop-blur-sm"
+      onClick={(e) => {
+        // Close if clicking directly on the backdrop
+        if (e.target === e.currentTarget) {
+          closeSelector();
+        }
+      }}
+      onMouseDown={(e) => {
+        // Only handle clicks directly on the backdrop
+        if (e.target !== e.currentTarget) {
+          e.stopPropagation();
+        }
+      }}
     >
-      <div className="w-full max-w-md mx-auto mt-16 p-4">
+      <div 
+        ref={inputRef} 
+        className="w-full max-w-md mx-auto mt-16 p-4"
+        onClick={(e) => e.stopPropagation()}
+      >
         <SimpleCommandContent
           inputValue={inputValue}
           setInputValue={setInputValue}
@@ -82,6 +97,7 @@ export function ActivitySelector({
           onClose={closeSelector}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

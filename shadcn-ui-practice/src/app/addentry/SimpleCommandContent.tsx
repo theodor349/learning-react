@@ -124,7 +124,10 @@ export function SimpleCommandContent({
       </div>
 
       {/* Results list */}
-      <div className="max-h-[300px] overflow-y-auto py-2">
+      <div 
+        className="max-h-[300px] overflow-y-auto py-2"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Add option at start (when no matches) */}
         {filteredActivities.length === 0 && inputValue.trim() !== "" && (
           <div 
@@ -132,7 +135,13 @@ export function SimpleCommandContent({
               if (el) itemsRef.current[0] = el;
             }}
             className={`px-4 py-2 text-sm cursor-pointer flex items-center gap-2 ${highlightedIndex === 0 ? 'bg-accent text-accent-foreground' : 'hover:bg-muted'}`}
-            onClick={() => handleSelect(inputValue)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelect(inputValue);
+            }}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+            }}
           >
             <Plus className="h-4 w-4" />
             <span>
@@ -159,7 +168,14 @@ export function SimpleCommandContent({
                 if (el) itemsRef.current[itemIdx] = el;
               }}
               className={`px-4 py-2 text-sm cursor-pointer flex items-center gap-2 ${highlightedIndex === itemIdx ? 'bg-accent text-accent-foreground' : 'hover:bg-muted'}`}
-              onClick={() => handleSelect(activity.name)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSelect(activity.name);
+              }}
+              onMouseDown={(e) => {
+                // Prevent event bubbling to avoid triggering the backdrop click
+                e.stopPropagation();
+              }}
             >
               <div
                 className="h-3 w-3 rounded-full"
@@ -180,7 +196,13 @@ export function SimpleCommandContent({
               if (el) itemsRef.current[totalItems - 1] = el;
             }}
             className={`px-4 py-2 text-sm cursor-pointer flex items-center gap-2 border-t mt-2 pt-3 ${highlightedIndex === totalItems - 1 ? 'bg-accent text-accent-foreground' : 'hover:bg-muted'}`}
-            onClick={() => handleSelect(inputValue)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelect(inputValue);
+            }}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+            }}
           >
             <Plus className="h-4 w-4" />
             <span>
