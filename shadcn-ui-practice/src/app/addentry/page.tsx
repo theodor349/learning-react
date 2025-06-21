@@ -36,10 +36,8 @@ export default function AddEntryPage() {
 
   // Add another activity input field
   const addActivityInput = () => {
-    const newIndex = activityInputs.length;
+    // Just add a new empty input without activating it
     setActivityInputs([...activityInputs, ""]);
-    // Set this new input as active after a short delay to allow for state update
-    setTimeout(() => setActiveInput(newIndex), 50);
   }
 
   // Remove an activity input field
