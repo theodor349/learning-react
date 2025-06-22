@@ -5,7 +5,7 @@ import { format, parseISO, addHours, isWithinInterval, differenceInMinutes } fro
 import { calendarData, Entry, Activity } from '@/app/calendar/data';
 import AddEntryDialog from './AddEntryDialog';
 
-const HOUR_HEIGHT_PX = 80;
+const HOUR_HEIGHT_PX = 100;
 const QUARTER_HEIGHT_PX = HOUR_HEIGHT_PX / 4;
 
 interface DayViewProps {
@@ -145,7 +145,7 @@ const DayView = ({ date }: DayViewProps) => {
                     style={{ top: `${topPosition}px`, height: `${height}px` }}
                     onClick={() => handleEntryClick(entry)}
                   >
-                    <div className="h-full bg-secondary/50 border-l-10 rounded-r-lg p-2 flex flex-col justify-center shadow-sm cursor-pointer"
+                    <div className="h-full bg-secondary/50 border-l-10 rounded-r-lg px-2 flex flex-col justify-start shadow-sm cursor-pointer"
                          style={{ borderLeftColor: primaryCategory.color }}
                     >
                       <p className="font-semibold text-primary text-sm">{title}</p>
