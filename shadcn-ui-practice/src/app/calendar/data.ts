@@ -75,7 +75,7 @@ export const calendarData = [
   },
   {
     "StartTime": "2025-06-22T04:45:00Z",
-    "EndTime": "2025-06-22T05:30:00Z",
+    "EndTime": "2025-06-22T05:00:00Z",
     "Activities": [
       {
         "id": 105,
@@ -90,7 +90,7 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-22T05:30:00Z",
+    "StartTime": "2025-06-22T05:00:00Z",
     "EndTime": "2025-06-22T07:00:00Z",
     "Activities": [
       {
@@ -275,22 +275,6 @@ export const calendarData = [
           "name": "Personal",
           "sortOrder": 4,
           "color": "#FF9800"
-        }
-      }
-    ]
-  },
-  {
-    "StartTime": "2025-06-22T22:00:00Z",
-    "EndTime": null,
-    "Activities": [
-      {
-        "id": 119,
-        "name": "Sleep",
-        "category": {
-          "id": "wellness",
-          "name": "Wellness",
-          "sortOrder": 3,
-          "color": "#2196F3"
         }
       }
     ]

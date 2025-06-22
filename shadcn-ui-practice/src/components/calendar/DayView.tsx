@@ -45,7 +45,7 @@ const DayView = ({ date }: DayViewProps) => {
 
   // Filter entries for today
   const todaysEntries = calendarData.filter(entry => {
-    return formatDateForComparison(entry.StartTime) === today;
+    return true; // formatDateForComparison(entry.StartTime) === today;
   });
 
   // Update current time marker position
