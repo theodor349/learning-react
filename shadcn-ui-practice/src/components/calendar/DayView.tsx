@@ -5,6 +5,9 @@ import { format, parseISO, addHours, isWithinInterval, differenceInMinutes } fro
 import { calendarData, Entry, Activity } from '@/app/calendar/data';
 import AddEntryDialog from './AddEntryDialog';
 
+const HOUR_HEIGHT_PX = 80;
+const QUARTER_HEIGHT_PX = HOUR_HEIGHT_PX / 4;
+
 interface DayViewProps {
   date: Date;
 }
@@ -52,7 +55,7 @@ const DayView = ({ date }: DayViewProps) => {
   useEffect(() => {
     const updateTimeMarker = () => {
       const now = new Date();
-      const totalMinutes = (now.getHours() * 60 + now.getMinutes()) * 2; // multiply by 2 for 120px per hour
+      const totalMinutes = (now.getHours() * 60 + now.getMinutes()) * (HOUR_HEIGHT_PX / 60);
       setCurrentTimeTop(totalMinutes);
 
       // Only show time marker if viewing current date
@@ -83,7 +86,8 @@ const DayView = ({ date }: DayViewProps) => {
                     {[0, 1, 2, 3].map((quarter) => (
                       <div 
                         key={quarter}
-                        className={`h-[30px] w-full border-b ${quarter === 3 ? 'border-secondary' : 'border-secondary/50 border-dashed'} hover:bg-primary/10 cursor-pointer`}
+                        className={`w-full border-b ${quarter === 3 ? 'border-secondary' : 'border-secondary/50 border-dashed'} hover:bg-primary/10 cursor-pointer`}
+                        style={{ height: `${QUARTER_HEIGHT_PX}px` }}
                         onClick={() => handleTimeBlockClick(hour, quarter * 15)}
                       />
                     ))}
@@ -101,7 +105,7 @@ const DayView = ({ date }: DayViewProps) => {
             )}
 
             {/* Events Container */}
-            <div className="relative w-[calc(100%-60px)] ml-[60px] h-[2880px]">
+            <div className="relative w-[calc(100%-60px)] ml-[60px]" style={{ height: `${24 * HOUR_HEIGHT_PX}px` }}>
               {todaysEntries.map((entry, index) => {
                 const startTime = parseISO(entry.StartTime);
                 const startHour = startTime.getHours();
@@ -109,21 +113,21 @@ const DayView = ({ date }: DayViewProps) => {
                 let showTime = false;
 
                 // Calculate top position based on start time (minutes from midnight)
-                const topPosition = (startHour * 60 + startMinute) * 2; // multiply by 2 for 120px per hour
+                const topPosition = (startHour * 60 + startMinute) * (HOUR_HEIGHT_PX / 60);
 
                 // Calculate height based on duration
                 let height;
                 if (entry.EndTime) {
                   const endTime = parseISO(entry.EndTime);
                   const duration = differenceInMinutes(endTime, startTime);
-                  height = duration * 2; // multiply by 2 for 120px per hour
+                  height = duration * (HOUR_HEIGHT_PX / 60);
                   if(duration > 15)
                   {
                     showTime = true;
                   }
                 } else {
                   // Default height if no end time
-                  height = 120; // 1 hour default
+                  height = HOUR_HEIGHT_PX; // 1 hour default
                 }
 
                 // Get primary category for styling
