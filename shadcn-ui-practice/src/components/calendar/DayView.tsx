@@ -145,7 +145,7 @@ const DayView = ({ date }: DayViewProps) => {
                     style={{ top: `${topPosition}px`, height: `${height}px` }}
                     onClick={() => handleEntryClick(entry)}
                   >
-                    <div className="h-full bg-secondary/50 border-l-10 px-2 flex flex-col justify-start shadow-sm cursor-pointer"
+                    <div className="h-full bg-secondary/50 border-l-16 px-2 flex flex-col justify-start shadow-sm cursor-pointer"
                          style={{ borderLeftColor: primaryCategory.color }}
                     >
                       <p className="font-semibold text-primary text-sm">{title}</p>
