@@ -23,15 +23,6 @@ export default function CalendarPage() {
               <span className="text-primary/70">{format(today, 'yyyy') + ", week " + format(today, 'ww') }</span>
             </div>
           </div>
-
-          {/* New Event Button */}
-          <button 
-            className="bg-primary text-primary-foreground rounded-md px-4 py-2 flex items-center shadow-sm hover:bg-accent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50"
-            onClick={() => {/* Handle new event */}}
-          >
-            <Plus className="h-5 w-5" />
-            <span className="ml-2 hidden md:inline">New Event</span>
-          </button>
         </div>
       </div>
 
