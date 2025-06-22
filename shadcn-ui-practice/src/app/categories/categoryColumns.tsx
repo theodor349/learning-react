@@ -65,7 +65,7 @@ export const columns: ColumnDef<Category>[] = [
       }
 
       const handleSortOrderChange = (newSortOrder: number) => {
-        console.log(`Changed sort order for ${category.name} to ${newSortOrder}`)
+        console.log(`Changed rank for ${category.name} to ${newSortOrder}`)
         setSortOrderEditorOpen(false)
       }
 
@@ -83,7 +83,7 @@ export const columns: ColumnDef<Category>[] = [
                 Change Color
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setSortOrderEditorOpen(true)}>
-                Change Sort Order
+                Change Rank
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -35,12 +35,12 @@ export function SortOrderEditor({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Sort Order</DialogTitle>
+          <DialogTitle>Edit Rank</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="sortOrder" className="text-right">
-              Sort Order
+              Rank
             </Label>
             <Input
               id="sortOrder"
