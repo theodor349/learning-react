@@ -1,7 +1,7 @@
 export const calendarData = [
   {
-    "StartTime": "2025-06-20T22:00:00Z",
-    "EndTime": "2025-06-21T00:00:00Z",
+    "StartTime": "2025-06-21T22:00:00Z",
+    "EndTime": "2025-06-22T00:00:00Z",
     "Activities": [
       {
         "id": 101,
@@ -16,8 +16,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T00:00:00Z",
-    "EndTime": "2025-06-21T01:30:00Z",
+    "StartTime": "2025-06-22T00:00:00Z",
+    "EndTime": "2025-06-22T01:30:00Z",
     "Activities": [
       {
         "id": 101,
@@ -32,8 +32,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T01:30:00Z",
-    "EndTime": "2025-06-21T02:00:00Z",
+    "StartTime": "2025-06-22T01:30:00Z",
+    "EndTime": "2025-06-22T02:00:00Z",
     "Activities": [
       {
         "id": 102,
@@ -48,8 +48,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T02:00:00Z",
-    "EndTime": "2025-06-21T04:45:00Z",
+    "StartTime": "2025-06-22T02:00:00Z",
+    "EndTime": "2025-06-22T04:45:00Z",
     "Activities": [
       {
         "id": 103,
@@ -74,8 +74,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T04:45:00Z",
-    "EndTime": "2025-06-21T05:30:00Z",
+    "StartTime": "2025-06-22T04:45:00Z",
+    "EndTime": "2025-06-22T05:30:00Z",
     "Activities": [
       {
         "id": 105,
@@ -90,8 +90,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T05:30:00Z",
-    "EndTime": "2025-06-21T07:00:00Z",
+    "StartTime": "2025-06-22T05:30:00Z",
+    "EndTime": "2025-06-22T07:00:00Z",
     "Activities": [
       {
         "id": 106,
@@ -106,8 +106,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T07:00:00Z",
-    "EndTime": "2025-06-21T09:15:00Z",
+    "StartTime": "2025-06-22T07:00:00Z",
+    "EndTime": "2025-06-22T09:15:00Z",
     "Activities": [
       {
         "id": 107,
@@ -122,8 +122,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T09:15:00Z",
-    "EndTime": "2025-06-21T09:45:00Z",
+    "StartTime": "2025-06-22T09:15:00Z",
+    "EndTime": "2025-06-22T09:45:00Z",
     "Activities": [
       {
         "id": 108,
@@ -138,8 +138,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T09:45:00Z",
-    "EndTime": "2025-06-21T12:00:00Z",
+    "StartTime": "2025-06-22T09:45:00Z",
+    "EndTime": "2025-06-22T12:00:00Z",
     "Activities": [
       {
         "id": 109,
@@ -164,8 +164,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T12:00:00Z",
-    "EndTime": "2025-06-21T13:00:00Z",
+    "StartTime": "2025-06-22T12:00:00Z",
+    "EndTime": "2025-06-22T13:00:00Z",
     "Activities": [
       {
         "id": 111,
@@ -180,8 +180,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T13:00:00Z",
-    "EndTime": "2025-06-21T15:30:00Z",
+    "StartTime": "2025-06-22T13:00:00Z",
+    "EndTime": "2025-06-22T15:30:00Z",
     "Activities": [
       {
         "id": 112,
@@ -206,8 +206,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T15:30:00Z",
-    "EndTime": "2025-06-21T16:00:00Z",
+    "StartTime": "2025-06-22T15:30:00Z",
+    "EndTime": "2025-06-22T16:00:00Z",
     "Activities": [
       {
         "id": 114,
@@ -222,8 +222,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T16:00:00Z",
-    "EndTime": "2025-06-21T18:00:00Z",
+    "StartTime": "2025-06-22T16:00:00Z",
+    "EndTime": "2025-06-22T18:00:00Z",
     "Activities": [
       {
         "id": 115,
@@ -248,8 +248,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T18:00:00Z",
-    "EndTime": "2025-06-21T20:30:00Z",
+    "StartTime": "2025-06-22T18:00:00Z",
+    "EndTime": "2025-06-22T20:30:00Z",
     "Activities": [
       {
         "id": 117,
@@ -264,8 +264,8 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T20:30:00Z",
-    "EndTime": "2025-06-21T22:00:00Z",
+    "StartTime": "2025-06-22T20:30:00Z",
+    "EndTime": "2025-06-22T22:00:00Z",
     "Activities": [
       {
         "id": 118,
@@ -280,7 +280,7 @@ export const calendarData = [
     ]
   },
   {
-    "StartTime": "2025-06-21T22:00:00Z",
+    "StartTime": "2025-06-22T22:00:00Z",
     "EndTime": null,
     "Activities": [
       {
@@ -313,6 +313,5 @@ export interface Activity {
 export interface Entry {
   StartTime: string; // Using string for datetime for JSON compatibility
   EndTime: string | null; // Using string for datetime for JSON compatibility, can be null
-  Color: string; // Hex color
   Activities: Activity[];
 }

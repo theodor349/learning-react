@@ -10,7 +10,7 @@ export default function CalendarPage() {
   return (
     <div className="flex flex-col h-screen">
       {/* Header Section */}
-      <header className="sticky top-0 z-10 bg-secondary/30 backdrop-blur-sm border-b border-accent/50 shadow-sm">
+      <div className="sticky top-0 z-10 bg-secondary/30 backdrop-blur-sm border-b border-accent/50 shadow-sm">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           {/* Date Display */}
           <div className="flex items-center">
@@ -33,14 +33,12 @@ export default function CalendarPage() {
             <span className="ml-2 hidden md:inline">New Event</span>
           </button>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="flex-grow overflow-auto">
-        <div className="container mx-auto px-4 py-4">
-          <DayView date={today} />
-        </div>
-      </main>
+      <div className="flex-grow overflow-auto container mx-auto">
+        <DayView date={today} />
+      </div>
     </div>
   );
 }
