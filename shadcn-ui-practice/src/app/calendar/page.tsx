@@ -2,12 +2,17 @@
 
 import DayView from '@/components/calendar/DayView';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { addDays, format, subDays } from 'date-fns';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import * as React from "react";
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [datePickerOpen, setDatePickerOpen] = React.useState(false)
 
   const goToPreviousDay = () => {
     setSelectedDate(prev => subDays(prev, 1));
@@ -35,7 +40,7 @@ export default function CalendarPage() {
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Button 
               variant="outline" 
               size="icon" 
@@ -44,7 +49,33 @@ export default function CalendarPage() {
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button 
+
+            {/* Date Picker */}
+            <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  id="date-picker"
+                  className="flex-grow justify-between font-normal bg-background/80 hover:bg-background"
+                >
+                  <CalendarIcon className="h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto overflow-hidden p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  captionLayout="dropdown"
+                  onSelect={(date) => {
+                    if (date) {
+                      setSelectedDate(date);
+                      setDatePickerOpen(false)
+                    }
+                  }}
+                />
+              </PopoverContent>
+            </Popover>
+            <Button
               variant="outline" 
               size="icon" 
               onClick={goToNextDay}
