@@ -69,7 +69,7 @@ const DayView = ({ date }: DayViewProps) => {
 
   return (
     <div className="relative">
-      <main className="flex-grow w-full overflow-y-auto custom-scrollbar relative">
+      <div className="flex-grow w-full overflow-y-auto custom-scrollbar relative">
         <div className="max-w-7xl mx-auto px-2 sm:px-4">
           <div className="relative w-full">
             {/* Timeline background grid */}
@@ -136,7 +136,7 @@ const DayView = ({ date }: DayViewProps) => {
                     style={{ top: `${topPosition}px`, height: `${height}px` }}
                     onClick={() => handleEntryClick(entry)}
                   >
-                    <div className="h-full bg-secondary/50 border-l-4 rounded-r-lg p-2 flex flex-col justify-center shadow-sm cursor-pointer"
+                    <div className="h-full bg-secondary/50 border-l-10 rounded-r-lg p-2 flex flex-col justify-center shadow-sm cursor-pointer"
                          style={{ borderLeftColor: primaryCategory.color }}
                     >
                       <p className="font-semibold text-primary text-sm">{title}</p>
@@ -150,7 +150,7 @@ const DayView = ({ date }: DayViewProps) => {
             </div>
           </div>
         </div>
-      </main>
+      </div>
 
       <AddEntryDialog 
         isOpen={isDialogOpen} 
