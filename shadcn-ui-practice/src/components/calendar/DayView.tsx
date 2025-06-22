@@ -141,11 +141,11 @@ const DayView = ({ date }: DayViewProps) => {
                 return (
                   <div 
                     key={`${entry.StartTime}-${index}`}
-                    className="absolute w-full p-0.5"
+                    className="absolute w-full p-0.5 pb-1"
                     style={{ top: `${topPosition}px`, height: `${height}px` }}
                     onClick={() => handleEntryClick(entry)}
                   >
-                    <div className="h-full bg-secondary/50 border-l-10 rounded-r-lg px-2 flex flex-col justify-start shadow-sm cursor-pointer"
+                    <div className="h-full bg-secondary/50 border-l-10 px-2 flex flex-col justify-start shadow-sm cursor-pointer"
                          style={{ borderLeftColor: primaryCategory.color }}
                     >
                       <p className="font-semibold text-primary text-sm">{title}</p>
