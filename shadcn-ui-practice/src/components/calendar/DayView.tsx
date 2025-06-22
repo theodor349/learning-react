@@ -52,7 +52,7 @@ const DayView = ({ date }: DayViewProps) => {
   useEffect(() => {
     const updateTimeMarker = () => {
       const now = new Date();
-      const totalMinutes = now.getHours() * 60 + now.getMinutes();
+      const totalMinutes = (now.getHours() * 60 + now.getMinutes()) * 2; // multiply by 2 for 120px per hour
       setCurrentTimeTop(totalMinutes);
 
       // Only show time marker if viewing current date
@@ -83,7 +83,7 @@ const DayView = ({ date }: DayViewProps) => {
                     {[0, 1, 2, 3].map((quarter) => (
                       <div 
                         key={quarter}
-                        className={`h-[15px] w-full border-b ${quarter === 3 ? 'border-secondary' : 'border-secondary/50 border-dashed'} hover:bg-primary/10 cursor-pointer`}
+                        className={`h-[30px] w-full border-b ${quarter === 3 ? 'border-secondary' : 'border-secondary/50 border-dashed'} hover:bg-primary/10 cursor-pointer`}
                         onClick={() => handleTimeBlockClick(hour, quarter * 15)}
                       />
                     ))}
@@ -101,24 +101,29 @@ const DayView = ({ date }: DayViewProps) => {
             )}
 
             {/* Events Container */}
-            <div className="relative w-[calc(100%-60px)] ml-[60px] h-[1440px]">
+            <div className="relative w-[calc(100%-60px)] ml-[60px] h-[2880px]">
               {todaysEntries.map((entry, index) => {
                 const startTime = parseISO(entry.StartTime);
                 const startHour = startTime.getHours();
                 const startMinute = startTime.getMinutes();
+                let showTime = false;
 
                 // Calculate top position based on start time (minutes from midnight)
-                const topPosition = startHour * 60 + startMinute;
+                const topPosition = (startHour * 60 + startMinute) * 2; // multiply by 2 for 120px per hour
 
                 // Calculate height based on duration
                 let height;
                 if (entry.EndTime) {
                   const endTime = parseISO(entry.EndTime);
                   const duration = differenceInMinutes(endTime, startTime);
-                  height = duration;
+                  height = duration * 2; // multiply by 2 for 120px per hour
+                  if(duration > 15)
+                  {
+                    showTime = true;
+                  }
                 } else {
                   // Default height if no end time
-                  height = 60; // 1 hour default
+                  height = 120; // 1 hour default
                 }
 
                 // Get primary category for styling
@@ -140,9 +145,9 @@ const DayView = ({ date }: DayViewProps) => {
                          style={{ borderLeftColor: primaryCategory.color }}
                     >
                       <p className="font-semibold text-primary text-sm">{title}</p>
-                      <p className="text-xs text-primary/80">
+                      {showTime && <p className="text-xs text-primary/80">
                         {format(startTime, 'HH:mm')} - {entry.EndTime ? format(parseISO(entry.EndTime), 'HH:mm') : 'ongoing'}
-                      </p>
+                      </p>}
                     </div>
                   </div>
                 );
