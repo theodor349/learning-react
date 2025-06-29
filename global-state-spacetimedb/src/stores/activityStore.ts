@@ -1,5 +1,5 @@
-import {Activity, EventContext, DbConnection} from "@/module_bindings";
-import {getDbConnection} from '@/spacetimedb';
+import {DbConnection} from "@/module_bindings";
+import {getDbConnection, onConnectionEstablished, onSubscriptionApplied} from '@/spacetimedb';
 
 class ActivityStore {
   private listeners: Set<() => void> = new Set();
@@ -8,28 +8,29 @@ class ActivityStore {
   private serverSnapshot: any[] = [];
 
   constructor() {
-    // Don't initialize connection in constructor
+    // Listen for subscription completion to update initial data
+    onSubscriptionApplied(() => {
+      console.log('Subscription applied - updating snapshot');
+      this.updateSnapshot();
+    });
   }
 
   private getConnection(): DbConnection {
     if (!this.connection) {
       this.connection = getDbConnection();
       // Set up event listeners only once
-      this.connection.db.activity.onInsert((ctx: EventContext, row: Activity) => {
+      this.connection.db.activity.onInsert((ctx, row) => {
         console.log("Inserting activity: ", row.name, " (", row.id, ")")
         this.updateSnapshot()
       });
-      this.connection.db.activity.onUpdate((ctx: EventContext, oldRow: Activity, newRow: Activity) => {
+      this.connection.db.activity.onUpdate((ctx, oldRow, newRow) => {
         console.log("Updating activity: ", oldRow.name, " (", oldRow.id, ") to ", newRow.name, " (", newRow.id, ")")
         this.updateSnapshot()
       });
-      this.connection.db.activity.onDelete((ctx: EventContext, row: Activity) => {
+      this.connection.db.activity.onDelete((ctx, row) => {
         console.log("Deleting activity: ", row.name, " (", row.id, ")")
         this.updateSnapshot()
       });
-      
-      // Initial snapshot update
-      this.updateSnapshot();
     }
     return this.connection;
   }
