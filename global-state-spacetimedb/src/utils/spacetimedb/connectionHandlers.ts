@@ -8,17 +8,15 @@ import {
 import { ErrorContextInterface, Identity } from '@clockworklabs/spacetimedb-sdk';
 import {
   connectionStatus,
-  notifyConnectionEstablished,
-  notifySubscriptionApplied
+  notifyConnectionDisconnected, notifyConnectionError,
+  notifyConnectionEstablished
 } from "@/utils/spacetimedb/connectionEvents";
 import {subscriptions} from "@/utils/spacetimedb/subscriptions";
+import {
+  notifySubscriptionApplied,
+  notifySubscriptionError
+} from "@/utils/spacetimedb/subscriptionEvents";
 
-export interface ConnectionStatus {
-  isConnected: boolean;
-  isSubscribed: boolean;
-  error: Error | null;
-  identity: Identity | null;
-}
 
 export const subscribeToQueries = (conn: DbConnection, queries: string[]) => {
   conn
@@ -31,6 +29,7 @@ export const subscribeToQueries = (conn: DbConnection, queries: string[]) => {
   .onError((ctx: ErrorContextInterface<RemoteTables, RemoteReducers, SetReducerFlags>) => {
     console.error('[SpacetimeDB] Error subscribing to SpacetimeDB ' + ctx.event)
     connectionStatus.isSubscribed = false;
+    notifySubscriptionError();
   })
   .subscribe(queries);
 };
@@ -46,7 +45,6 @@ export const onConnect = (
   localStorage.setItem('auth_token', token);
 
   notifyConnectionEstablished();
-
   subscribeToQueries(conn, subscriptions)
 };
 
@@ -54,6 +52,7 @@ export const onDisconnect = () => {
   console.warn('[SpacetimeDB] Disconnected.');
   connectionStatus.isConnected = false;
   connectionStatus.isSubscribed = false;
+  notifyConnectionDisconnected();
 };
 
 export const onConnectError = (ctx: ErrorContext, error: Error) => {
@@ -61,4 +60,5 @@ export const onConnectError = (ctx: ErrorContext, error: Error) => {
   connectionStatus.isConnected = false;
   connectionStatus.isSubscribed = false;
   connectionStatus.error = error;
+  notifyConnectionError();
 };

@@ -1,6 +1,6 @@
 import {Category, DbConnection} from "@/module_bindings";
 import {getDbConnection} from '@/utils/spacetimedb/connectionFactory';
-import {onSubscriptionApplied} from "@/utils/spacetimedb/connectionEvents";
+import {onSubscriptionChange} from "@/utils/spacetimedb/subscriptionEvents";
 
 class CategoryStore {
   private listeners: Set<() => void> = new Set();
@@ -9,7 +9,7 @@ class CategoryStore {
   private serverSnapshot: Category[] = [];
 
   constructor() {
-    onSubscriptionApplied(() => {
+    onSubscriptionChange(() => {
       this.updateSnapshot();
     });
   }
