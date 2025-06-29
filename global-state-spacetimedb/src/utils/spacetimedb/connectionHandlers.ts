@@ -11,6 +11,7 @@ import {
   notifyConnectionEstablished,
   notifySubscriptionApplied
 } from "@/utils/spacetimedb/connectionEvents";
+import {subscriptions} from "@/utils/spacetimedb/subscriptions";
 
 export interface ConnectionStatus {
   isConnected: boolean;
@@ -46,7 +47,7 @@ export const onConnect = (
 
   notifyConnectionEstablished();
 
-  subscribeToQueries(conn, ['SELECT * FROM Activity', 'SELECT * FROM Category'])
+  subscribeToQueries(conn, subscriptions)
 };
 
 export const onDisconnect = () => {
