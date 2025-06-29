@@ -17,7 +17,8 @@ class ActivityStore {
   public subscribe(onStoreChange: () => void) {
     this.listeners.add(onStoreChange);
     return () => {
-      this.listeners.delete(onStoreChange); // Cleanup on unmount
+      // Cleanup on unmount
+      this.listeners.delete(onStoreChange);
     };
   }
 
@@ -33,6 +34,7 @@ class ActivityStore {
   }
 
   public getServerSnapshot() {
+    // Return server snapshot during SSR, as we are not able to retrieve data on the server
     return this.serverSnapshot;
   }
 
@@ -47,13 +49,9 @@ class ActivityStore {
   }
 
   private updateSnapshot() {
-    try {
-      if (this.connection) {
-        this.cachedSnapshot = Array.from(this.connection.db.activity.iter());
-        this.emitChange();
-      }
-    } catch (error) {
-      console.warn('Failed to update activities snapshot:', error);
+    if (this.connection) {
+      this.cachedSnapshot = Array.from(this.connection.db.activity.iter());
+      this.emitChange();
     }
   }
 
