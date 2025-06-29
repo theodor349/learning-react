@@ -1,3 +1,5 @@
+'use client'
+
 import { DbConnection, type ErrorContext, type EventContext } from '@/module_bindings';
 import { Identity } from '@clockworklabs/spacetimedb-sdk';
 
@@ -17,7 +19,7 @@ export const getDbConnection = (): DbConnection => {
   // 1. Guard against running on the Server (SSR)
   // The builder uses `localStorage`, which only exists in the browser.
   if (typeof window === 'undefined') {
-    throw new Error('Cannot use SpacetimeDB on the Server (SSR).');
+    throw new Error('Cannot use SpacetimeDB on the server.');
   }
 
   // 2. If the connection already exists, return it immediately.

@@ -4,7 +4,8 @@ import { activityStore } from "@/stores/activityStore";
 export function useActivities() {
   const activities = useSyncExternalStore(
     (callback) => activityStore.subscribe(callback),
-    () => activityStore.getSnapshot()
+    () => activityStore.getSnapshot(),
+    () => activityStore.getServerSnapshot()
   );
   return activities;
 }

@@ -5,7 +5,7 @@ import { getDbConnection } from '@/spacetimedb';
 
 const SpacetimeDBProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    getDbConnection();
+    // getDbConnection();
   }, []);
 
   // It doesn't need to render anything itself, just pass children through.
