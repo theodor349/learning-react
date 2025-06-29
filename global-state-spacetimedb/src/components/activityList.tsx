@@ -3,8 +3,6 @@
 import {useActivities} from "@/hooks/useActivities";
 
 export  default function ActivityList() {
-  // 1. Get the live array of players.
-  // This component will only re-render if the list of players changes.
   const allActivities = useActivities();
 
   return (

@@ -29,7 +29,7 @@ export const createConnectionHandlers = (
       notifySubscriptionApplied();
     })
     .onError((ctx: ErrorContextInterface<RemoteTables, RemoteReducers, SetReducerFlags>) => {
-      console.log('[SpacetimeDB] Error subscribing to SpacetimeDB ' + ctx.event)
+      console.error('[SpacetimeDB] Error subscribing to SpacetimeDB ' + ctx.event)
       connectionStatus.isSubscribed = false;
     })
     .subscribe(queries);
