@@ -1,12 +1,12 @@
-import {Activity, DbConnection} from "@/module_bindings";
+import {Category, DbConnection} from "@/module_bindings";
 import {getDbConnection} from '@/utils/spacetimedb/connectionFactory';
 import {onSubscriptionApplied} from "@/utils/spacetimedb/connectionEvents";
 
-class ActivityStore {
+class CategoryStore {
   private listeners: Set<() => void> = new Set();
   private connection: DbConnection | null = null;
-  private cachedSnapshot: Activity[] = [];
-  private serverSnapshot: Activity[] = [];
+  private cachedSnapshot: Category[] = [];
+  private serverSnapshot: Category[] = [];
 
   constructor() {
     onSubscriptionApplied(() => {
@@ -27,7 +27,7 @@ class ActivityStore {
       return this.cachedSnapshot;
     } catch (error) {
       // Return server snapshot if connection fails (e.g., during SSR)
-      console.warn('Failed to get activities:', error);
+      console.warn('Failed to get categories:', error);
       return this.serverSnapshot;
     }
   }
@@ -39,9 +39,9 @@ class ActivityStore {
   private getConnection(): DbConnection {
     if (!this.connection) {
       this.connection = getDbConnection();
-      this.connection.db.activity.onInsert((ctx, row) => this.updateSnapshot());
-      this.connection.db.activity.onUpdate((ctx, oldRow, newRow) => this.updateSnapshot());
-      this.connection.db.activity.onDelete((ctx, row) => this.updateSnapshot());
+      this.connection.db.category.onInsert((ctx, row) => this.updateSnapshot());
+      this.connection.db.category.onUpdate((ctx, oldRow, newRow) => this.updateSnapshot());
+      this.connection.db.category.onDelete((ctx, row) => this.updateSnapshot());
     }
     return this.connection;
   }
@@ -49,7 +49,7 @@ class ActivityStore {
   private updateSnapshot() {
     try {
       if (this.connection) {
-        this.cachedSnapshot = Array.from(this.connection.db.activity.iter());
+        this.cachedSnapshot = Array.from(this.connection.db.category.iter());
         this.emitChange();
       }
     } catch (error) {
@@ -64,4 +64,4 @@ class ActivityStore {
   }
 }
 
-export const activityStore = new ActivityStore();
+export const categoryStore = new CategoryStore();

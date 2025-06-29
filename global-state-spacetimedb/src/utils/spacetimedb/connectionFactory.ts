@@ -1,46 +1,9 @@
 'use client'
 
 import {DbConnection} from '@/module_bindings';
-import {ConnectionStatus, createConnectionHandlers} from "@/utils/spacetimedbHandlers";
-import {Identity} from "@clockworklabs/spacetimedb-sdk";
+import {onConnect, onConnectError, onDisconnect} from "@/utils/spacetimedb/connectionHandlers";
 
 let singletonConnection: DbConnection | null = null;
-
-
-//////////////////////////////////////////
-////////// Connection Callbacks //////////
-//////////////////////////////////////////
-
-const connectionListeners = new Set<() => void>();
-const subscriptionListeners = new Set<() => void>();
-
-export const connectionStatus: ConnectionStatus = {
-  isConnected: false,
-  isSubscribed: false,
-  error: null as Error | null,
-  identity: null as Identity | null,
-};
-
-export const onConnectionEstablished = (callback: () => void) => {
-  connectionListeners.add(callback);
-  return () => connectionListeners.delete(callback);
-};
-export const onSubscriptionApplied = (callback: () => void) => {
-  subscriptionListeners.add(callback);
-  return () => subscriptionListeners.delete(callback);
-};
-
-const _notifyConnectionEstablished = () => {
-  connectionListeners.forEach(callback => callback());
-};
-const _notifySubscriptionApplied = () => {
-  subscriptionListeners.forEach(callback => callback());
-};
-
-
-//////////////////////////////////////////
-////////// Establish Connection //////////
-//////////////////////////////////////////
 
 export const getDbConnection = (): DbConnection => {
   const isSSR = typeof window === 'undefined';
@@ -57,12 +20,6 @@ export const getDbConnection = (): DbConnection => {
 };
 
 const buildDbConnection = () => {
-  const { onConnect, onDisconnect, onConnectError, subscribeToQueries } = createConnectionHandlers(
-    connectionStatus,
-    _notifyConnectionEstablished,
-    _notifySubscriptionApplied
-  );
-
   console.log('[SpacetimeDB] Building connection...');
   return DbConnection.builder()
   .withUri('ws://localhost:3000')
