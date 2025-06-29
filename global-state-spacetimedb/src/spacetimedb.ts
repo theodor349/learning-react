@@ -13,11 +13,11 @@ export const connectionStatus = {
 };
 
 // --- This is the main function your app will use ---
-export const getDbConnection = (): DbConnection | null => {
+export const getDbConnection = (): DbConnection => {
   // 1. Guard against running on the Server (SSR)
   // The builder uses `localStorage`, which only exists in the browser.
   if (typeof window === 'undefined') {
-    return null;
+    throw new Error('Cannot use SpacetimeDB on the Server (SSR).');
   }
 
   // 2. If the connection already exists, return it immediately.

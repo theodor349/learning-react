@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from 'react';
-import { getDbConnection } from '@/spacetimedb'; // Assuming your service is in lib/
+import { getDbConnection } from '@/spacetimedb';
 
 const SpacetimeDBProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
