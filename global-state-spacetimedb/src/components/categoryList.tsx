@@ -3,7 +3,6 @@
 import {useCategories} from "@/hooks/useCategories";
 
 export  default function CategoryList() {
-  console.log('Rendering CategoryList');
   const allCategories = useCategories();
 
   return (

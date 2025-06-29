@@ -3,7 +3,6 @@
 import {useActivities} from "@/hooks/useActivities";
 
 export  default function ActivityList() {
-  console.log('Rendering ActivityList');
   const allActivities = useActivities();
 
   return (
